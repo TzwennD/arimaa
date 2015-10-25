@@ -1,0 +1,4 @@
+* finish setStartingPosition sanity check
+* apply moves in startPosition
+* implement parsing for steps
+* implement Game::playOneRound and co
