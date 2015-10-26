@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Game::Game () : 
+Game::Game () :
     goldToPlay_(FIRSTCOLOR), rounds_(FIRSTMOVE), finished_(false), currentMove_(FIRSTMOVE,FIRSTCOLOR)
 {
     players_[COLORGOLD] = nullptr;
@@ -60,21 +60,21 @@ void Game::addPlayer(Player *newPlayer, bool gold)
 
 void Game::playOneRound()
 {
-  for_each(observerCollectionAll_.begin(), observerCollectionAll_.end(),
-	   [&] (Observer* ob) {ob->notify(board_, moves_); });
+    for_each(observerCollectionAll_.begin(), observerCollectionAll_.end(),
+	     [&] (Observer* ob) {ob->notify(board_, moves_); });
 
-  for (int i = 0; i < 2; i++) {
-    bool finished = false;
-    int steps = 0;
-    while(!finished && steps < 4) {
-      /* sanity checks missing */
-      steps++;
-      players_[i]->notify(board_,moves_);
-      Step s = players_[i]->getStep(!bool(i));
-      board_.movePiece(s);
-      //board_.update_possible_moves();
+    for (int i = 0; i < 2; i++) {
+	bool finished = false;
+	int steps = 0;
+	while(!finished && steps < 4) {
+	    /* sanity checks missing */
+	    steps++;
+	    players_[i]->notify(board_,moves_);
+	    Step s = players_[i]->getStep(!bool(i));
+	    board_.movePiece(s);
+	    //board_.update_possible_moves();
+	}
     }
-  }
 }
 
 void Game::setStartPosition(bool gold)
@@ -108,7 +108,7 @@ void Game::notifyObserver() const
     // 	for each observer in observer.list(all)
     // 		     observer.notify(b, curr_step);
     // } else if /* global */ {
-    // 	for each observer in each list			
+    // 	for each observer in each list
     // 		     observer.notify(b, no_diff);
     // } else /* move colour just finished */ {
     // 	for each observer in observer.None

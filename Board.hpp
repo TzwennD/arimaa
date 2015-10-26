@@ -12,7 +12,7 @@
 
 /**
   * class Board
-  * 
+  *
   */
 
 class Board
@@ -39,9 +39,9 @@ public:
 
     bool movePiece (Step step);
 
-  /* for initial setup */
-  void setPiece (Step step);
-  void applyInitMove(Move& move);
+    /* for initial setup */
+    void setPiece (Step step);
+    void applyInitMove(Move& move);
 
     bool isPieceFrozen (int row, int column) const;
 
@@ -55,7 +55,6 @@ public:
     std::vector<std::vector<Square> > getSquares ( ) const {
         return squares_;
     }
-   
 };
 
 std::ostream &operator<<(std::ostream &os, const Board &board);

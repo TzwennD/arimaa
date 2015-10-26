@@ -27,7 +27,7 @@ arimaa: ${OBJECTS}
 	${CXX} ${CXXFLAGS} ${OBJECTS} -o $@
 
 TAGS:
-	rm -f TAGS && etags --append *.hpp && etags --append *.cpp 	
+	rm -f TAGS && etags --append *.hpp && etags --append *.cpp
 
 clean:
 	rm -f ${OBJECTS} $(DEPFILES) arimaa *~

@@ -7,8 +7,8 @@ using namespace std;
 
 int main()
 {
-  cout << "Welcome to Arimaa!!" << endl;
-  
+    cout << "Welcome to Arimaa!!" << endl;
+
     Text_Based_GUI gui;
 
     Game game = gui.getGame();

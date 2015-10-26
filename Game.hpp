@@ -19,14 +19,14 @@ class Game
 
     static const int COLORGOLD = 0;
     static const int COLORSILVER = 1;
-    
+
  public:
 
     Game ();
 
     virtual ~Game ( ) = default;
 
- 
+
     /**
      * config 0: no player observed (remote spectator)
      * 1: player gold observed (bot or remote)
@@ -57,7 +57,7 @@ private:
     std::list<Observer*> observerCollectionNone_;
     std::list<Observer*> observerCollectionAll_;
 
-    /* 
+    /*
      * must be 2 players
      * gold player is nr COLORGOLD
      * silver player is nr COLORSILVER

@@ -10,9 +10,8 @@
 
 /**
   * class Step
-  * 
+  *
   */
-
 class Step
 {
 public:

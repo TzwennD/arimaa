@@ -17,11 +17,11 @@ std::ostream &operator<<(std::ostream &os, const Piece &piece)
     char c;
 
     if (piece.isEmpty())
-      c = ' ';
+	c = ' ';
     else {
-      c = piece.getType();
-      if (piece.isGold())
-	c = std::toupper(c);
+	c = piece.getType();
+	if (piece.isGold())
+	    c = std::toupper(c);
     }
 
     os << c;
@@ -32,10 +32,10 @@ std::ostream &operator<<(std::ostream &os, const Piece &piece)
 bool
 Piece::isStronger(Piece other) const
 {
-  std::vector<char> ch = {'r', 'c', 'd', 'h', 'm', 'e'};
+    std::vector<char> ch = {'r', 'c', 'd', 'h', 'm', 'e'};
 
-  int type1 = std::distance(ch.begin(), std::find(ch.begin(), ch.end(), getType()));
-  int type2 = std::distance(ch.begin(), std::find(ch.begin(), ch.end(), other.getType()));
+    int type1 = std::distance(ch.begin(), std::find(ch.begin(), ch.end(), getType()));
+    int type2 = std::distance(ch.begin(), std::find(ch.begin(), ch.end(), other.getType()));
 
-  return type1 > type2;
+    return type1 > type2;
 }

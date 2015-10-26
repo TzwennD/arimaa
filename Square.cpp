@@ -1,6 +1,6 @@
 #include "Square.hpp"
 
-Square::Square (int row, int column): 
+Square::Square (int row, int column):
     row_(row),column_(column),
     isTrap_((row == 3 || row == 6) && (column == 3 || column == 6))
 {}

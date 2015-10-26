@@ -9,7 +9,7 @@
 
 /**
   * class Move
-  * 
+  *
   */
 
 class Move
@@ -40,9 +40,9 @@ public:
         return stepList_;
     }
 
-  void addStep(Step s) {
-    stepList_.push_back(s);
-  }
+    void addStep(Step s) {
+	stepList_.push_back(s);
+    }
 };
 
 std::ostream &operator<<(std::ostream &os, const Move &move);

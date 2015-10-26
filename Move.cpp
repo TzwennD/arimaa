@@ -10,7 +10,7 @@ Move::Move(int moveNr, bool gold): moveNr_(moveNr), gold_(gold)
 
 ostream &operator<<(ostream &os, const Move &move)
 {
-  os << move.getMoveNr();
+    os << move.getMoveNr();
     if (move.isGold())
 	os << "g";
     else
@@ -22,10 +22,10 @@ ostream &operator<<(ostream &os, const Move &move)
 /* needed?
 Move parseMove(istream &is)
 {
-  throw invalid_argument("Not yet implemented in move.");
-  Step s = parseStep(is);
-  Move m(0, true);
+    throw invalid_argument("Not yet implemented in move.");
+    Step s = parseStep(is);
+    Move m(0, true);
 
-  return m;
+    return m;
 }
 */

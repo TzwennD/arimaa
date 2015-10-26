@@ -10,24 +10,24 @@
 class Direction
 {
  public:
-    
+
     Direction();
     Direction (direction_type direction);
-    
+
     virtual ~Direction ( ) {}
 
-   
+
  private:
    int row_;
    int column_;
    direction_type direction_;
 
  public:
- 
+
    int getRow() const {
        return row_;
    }
-   
+
    int getColumn() const {
        return column_;
    }

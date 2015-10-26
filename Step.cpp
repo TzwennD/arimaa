@@ -8,7 +8,7 @@ using namespace std;
 
 Step::Step() {}
 
-Step::Step (Direction direction, int column, int row, char piece): 
+Step::Step (Direction direction, int column, int row, char piece):
     direction_(direction), column_(column), row_(row), piece_(piece)
 {
 }

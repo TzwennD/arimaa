@@ -11,45 +11,44 @@ class Piece;
 
 /**
  * class Square
- * 
+ *
  */
 
 class Square
 {
- public:
-    
-    Square (int row, int column);
-    
-    virtual ~Square ( ) = default;
-    
-    
-    bool isEmpty ( ) const {
-      return piece_.isEmpty();
-    }
-    
+public:
 
-  private:
+    Square (int row, int column);
+
+    virtual ~Square ( ) = default;
+
+
+    bool isEmpty ( ) const {
+	return piece_.isEmpty();
+    }
+
+private:
 
     int row_;
     int column_;
     bool isTrap_;
- 
-  Piece piece_;
-  std::set<Direction> movesPossible_;
+
+    Piece piece_;
+    std::set<Direction> movesPossible_;
 
 
- public:
+public:
 
-    
+
     bool getIsTrap() const {
         return isTrap_;
     }
-    
+
     void setPiece(Piece new_var) {
 	piece_ = new_var;
     }
-    
-     Piece getPiece() const {
+
+    Piece getPiece() const {
         return piece_;
     }
 

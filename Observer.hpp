@@ -8,7 +8,7 @@
 
 /**
   * class Observer
-  * 
+  *
   */
 
 class Observer
@@ -24,7 +24,6 @@ public:
      * Empty Destructor
      */
     virtual ~Observer ( );
-
 
     /**
      * @param  copy_board
