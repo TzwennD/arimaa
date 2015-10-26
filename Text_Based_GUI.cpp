@@ -109,6 +109,12 @@ getStartPosition(bool gold)
     else
 	cout << "silver";
     cout << ": Where to put your pieces?" << endl;
+    if(gold)
+      cout << "Your start rows are rows 7 and 8. " << endl;
+    else
+      cout << "Your start rows are rows 1 and 2. " << endl;
+
+
     Move m(1, gold);
     for (unsigned i = 0; i < figures.size(); i++)
       {

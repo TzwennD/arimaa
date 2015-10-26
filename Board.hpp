@@ -30,9 +30,9 @@ public:
      * Row 8 is north, row 1 is south.
      * This vector is upside-down!
      */
-    std::vector<std::vector<Square> > squares;
+    std::vector<std::vector<Square> > squares_;
 
-    std::vector<std::list<Piece*> > deadPieces;
+    std::vector<std::list<Piece*> > deadPieces_;
 
  public:
 
@@ -53,7 +53,7 @@ public:
 
 
     std::vector<std::vector<Square> > getSquares ( ) const {
-        return squares;
+        return squares_;
     }
    
 };

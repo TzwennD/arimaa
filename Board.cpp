@@ -11,12 +11,14 @@
 using namespace std;  
 
 /* squares are upside-down */
-Board::Board ( ): squares(8), deadPieces(2) {
+Board::Board ( ): squares_(8), deadPieces_(2) {
     for (int i = 8; i >= 1; i--) {
 	for (int j = 1; j <= 8; j++) {
-	    squares[8-i].push_back(Square(i,j));
+	    squares_[8-i].push_back(Square(i,j));
 	}
     }
+    
+
 }
 
 /* Attention: no sanity checks for step */
@@ -42,12 +44,12 @@ Board::movePiece (Step step)
 
 
   // is there already a piece in the way?
-  if (!squares[new_row][new_column].getPiece().isEmpty())
+  if (!squares_[new_row][new_column].getPiece().isEmpty())
     return false;
 
-  squares[new_row][new_column].
-    setPiece(squares[row][column].getPiece());
-  squares[row][column].setPiece(Piece());
+  squares_[new_row][new_column].
+    setPiece(squares_[row][column].getPiece());
+  squares_[row][column].setPiece(Piece());
 
 
   return true;
@@ -75,10 +77,10 @@ Board::setPiece (Step step)
     throw invalid_argument("No start position");
 
   /* square must be free */
-  if (!squares[row][column].isEmpty())
+  if (!squares_[row][column].isEmpty())
     throw invalid_argument("not empty");
 
-  squares[row][column].setPiece(piece);
+  squares_[row][column].setPiece(piece);
 }
 
 void
@@ -101,7 +103,7 @@ Board::isPieceFrozen (int row, int column) const
     allDirections.push_back(Direction(SOUTH));
     allDirections.push_back(Direction(WEST));
     
-    bool ownColor = squares[row][column].getPiece().isGold();
+    bool ownColor = squares_[row][column].getPiece().isGold();
     
     /*
      * if no other pieces -> false
@@ -118,10 +120,10 @@ Board::isPieceFrozen (int row, int column) const
 	    new_column < 0 || new_column >= 8 )
 	    continue;
 
-	if (squares[new_row][new_column].getPiece().isGold() == ownColor)
+	if (squares_[new_row][new_column].getPiece().isGold() == ownColor)
 	    return false;
 	else {
-	    if (squares[row][column].getPiece().isStronger(squares[new_row][new_column].getPiece()))
+	    if (squares_[row][column].getPiece().isStronger(squares_[new_row][new_column].getPiece()))
 		ret = true;
 	}
     }
@@ -133,7 +135,7 @@ Board::isPieceFrozen (int row, int column) const
 void
 Board::updatePossibleMoves (bool isPlayerGold )
 {
-    for (std::vector<Square> row : squares) {
+    for (std::vector<Square> row : squares_) {
 	for (Square square : row) {
 	    if (square.isEmpty()) {
 		square.setMovesPossible(set<Direction>());
@@ -186,7 +188,7 @@ Board::getFreeDirections (int row, int column) const
 	    continue;
 
 	/* add to return set iff square free */
-	if (squares[new_row][new_column].isEmpty())
+	if (squares_[new_row][new_column].isEmpty())
 	    ret.insert(d);
     }
         
@@ -201,10 +203,12 @@ ostream &operator<<(std::ostream &os, const Board &board)
 	os << i+1 << "|";
 	for (int j = 0; j < 8; j++) {
 	    Square sq = board.getSquares()[i][j];
-	    if (sq.isEmpty())
-		os << "  ";
+	    if(sq.getIsTrap())
+	      os << " ^";
+	    else if (sq.isEmpty())
+	      os << "  ";
 	    else
-		os << " " << sq.getPiece();
+	      os << " " << sq.getPiece();
 	}
 	os << " |" << endl;
     }
