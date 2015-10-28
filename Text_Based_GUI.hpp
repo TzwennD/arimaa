@@ -10,7 +10,7 @@
 
 /**
   * class Text_Based_GUI
-  * 
+  *
   */
 
 class Text_Based_GUI : public Player
@@ -19,18 +19,18 @@ public:
 
     Text_Based_GUI();
 
-    virtual ~Text_Based_GUI ( ) = default;    
+    virtual ~Text_Based_GUI ( ) = default;
 
 
     /**
      * ask until order "finish"
      * or four correct steps
-     * gives color in case two player are one object 
+     * gives color in case two player are one object
      */
     virtual Step getStep(bool gold);
 
     /*
-     * gives color in case two player are one object 
+     * gives color in case two player are one object
      */
     virtual Move getStartPosition(bool gold);
 

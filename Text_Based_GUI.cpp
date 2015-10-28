@@ -62,7 +62,7 @@ static Step parseStep(string& s)
     if (s.length() != 4)
 	throw invalid_argument("Not the right size!");
     /* is s == end : throw exception that can be handled by the game to end move*/
-  
+
     /* sanity checks missing */
     char figure = s[0];
     char direction = s[3];
@@ -75,7 +75,7 @@ static Step parseStep(string& s)
 /**
  * ask until order "end"
  * or four correct steps
- * gives color in case two player are one object 
+ * gives color in case two player are one object
  */
 Step
 Text_Based_GUI::
@@ -94,7 +94,7 @@ getStep(bool gold)
 }
 
 /*
- * gives color in case two player are one object 
+ * gives color in case two player are one object
  */
 Move
 Text_Based_GUI::
@@ -149,7 +149,7 @@ notify (Board copy_board, list<Move> changes )
     cout << "Current game status:" << endl;
     if (changes.empty()) {
 	cout << "No moves yet." << endl;
-    } else {  
+    } else {
 	Move& last = changes.back();
 	cout << last << endl;
     }
