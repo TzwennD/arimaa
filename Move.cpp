@@ -16,7 +16,7 @@ ostream &operator<<(ostream &os, const Move &move)
     else
 	os << "s";
     for (Step s : move.getStepList())
-	os << "  " << s << endl;
+	os << " " << s;
     return os;
 }
 /* needed?

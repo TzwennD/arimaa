@@ -12,15 +12,15 @@ using namespace std;
 
 /* squares are upside-down */
 Board::Board ( ): squares_(8), deadPieces_(2) {
-    for (int i = 8; i >= 1; i--) {
-	for (int j = 1; j <= 8; j++) {
-	    squares_[8-i].push_back(Square(i,j));
+    for (int i = 1; i <= 8; ++i) {
+	for (int j = 1; j <= 8; ++j) {
+	    squares_[i-1].push_back(Square(i,j));
 	}
     }
 }
 
 /* Attention: no sanity checks for step */
-bool
+void
 Board::movePiece (Step step)
 {
     int row = step.getRow();
@@ -31,25 +31,22 @@ Board::movePiece (Step step)
     int new_column = column;
 
     if (isPieceFrozen(row,column))
-	return false;
+	throw  invalid_argument("Piece is frozen! Cannot move.");
 
     new_row += direction.getRow();
     new_column += direction.getColumn();
     if (new_row < 0 || new_row >= 8)
-	return false;
+	throw  invalid_argument("Want to go out of the board! Cannot move.");
     if (new_column < 0 || new_column >= 8)
-	return false;
+	throw  invalid_argument("Want to go out of the board! Cannot move.");
 
 
     // is there already a piece in the way?
     if (!squares_[new_row][new_column].getPiece().isEmpty())
-	return false;
+	throw  invalid_argument("There is a piece in the way! Cannot move.");
 
     squares_[new_row][new_column].setPiece(squares_[row][column].getPiece());
     squares_[row][column].setPiece(Piece());
-
-
-    return true;
 }
 
 /* for initial setup */
@@ -58,16 +55,15 @@ Board::setPiece (Step step)
 {
     int column = step.getColumn();
     int row = step.getRow();
-    cout << "Setting piece to (" << column << "," << row << ")." << endl;
     Piece piece(step.getPiece());
 
     /* validate right position */
-    if (row >= 0 && row < 2) {// silver side
-	if (piece.isGold()) //wrong color
+    if (row >= 0 && row < 2) {// gold side
+	if (!piece.isGold()) //wrong color
 	    throw invalid_argument("wrong side");
     }
-    else if (row >= 6 && row < 8) {// gold side
-	if (!piece.isGold()) // wrong side
+    else if (row >= 6 && row < 8) {// silver side
+	if (piece.isGold()) // wrong side
 	    throw invalid_argument("wrong side");
     }
     else // no initial start position
@@ -75,7 +71,7 @@ Board::setPiece (Step step)
 
     /* square must be free */
     if (!squares_[row][column].isEmpty())
-	throw invalid_argument("not empty");
+	throw invalid_argument("Already a piece at that position!");
 
     squares_[row][column].setPiece(piece);
 }
@@ -195,14 +191,17 @@ Board::getFreeDirections (int row, int column) const
 
 ostream &operator<<(std::ostream &os, const Board &board)
 {
-    os  << "   a b c d e f g h" << endl;
     os << " +-----------------+" << endl;
-    for (int i = 0; i < 8; i++) {
-	os << i+1 << "|";
+    for (int i = 8; i >= 1; --i) {
+	os << i << "|";
 	for (int j = 0; j < 8; j++) {
-	    Square sq = board.getSquares()[i][j];
-	    if(sq.getIsTrap())
-		os << " ^";
+	    Square sq = board.getSquares()[i-1][j];
+	    if(sq.getIsTrap()) {
+		if (sq.isEmpty())
+		    os << " \033[41m \033[0m";
+		else
+		    os << " \033[41m" << sq.getPiece() << "\033[0m";
+	    }
 	    else if (sq.isEmpty())
 		os << "  ";
 	    else

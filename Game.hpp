@@ -71,9 +71,6 @@ private:
     int rounds_;
     bool finished_;
 
-    // must always be initialized
-    Move currentMove_;
-
 public:
 
     int getRounds ( ) const {
@@ -89,17 +86,28 @@ public:
     }
 
     Move getCurrentMove() const {
-	return currentMove_;
-    }
+	return moves_.back();
+	}
 
     friend std::ostream &operator<<(std::ostream &os, const Game &game);
 private:
 
-    int color2int(bool gold) {
+    static int color2int(bool gold) {
 	if (gold)
 	    return COLORGOLD;
 	else
 	    return COLORSILVER;
+    }
+
+    static bool int2color(int i) {
+	switch(i) {
+	case COLORGOLD:
+	    return true;
+	case COLORSILVER:
+	    return false;
+	default:
+	    throw std::invalid_argument("There are only two players.");
+	}
     }
 
     void playOneRound();

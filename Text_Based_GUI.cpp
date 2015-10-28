@@ -110,9 +110,9 @@ getStartPosition(bool gold)
 	cout << "silver";
     cout << ": Where to put your pieces?" << endl;
     if(gold)
-	cout << "Your start rows are rows 7 and 8. " << endl;
-    else
 	cout << "Your start rows are rows 1 and 2. " << endl;
+    else
+	cout << "Your start rows are rows 7 and 8. " << endl;
 
 
     Move m(1, gold);
@@ -146,7 +146,8 @@ void
 Text_Based_GUI::
 notify (Board copy_board, list<Move> changes )
 {
-    cout << "Current game status:" << endl;
+    cout << "====================================" << endl
+	 << "Current game status:" << endl;
     if (changes.empty()) {
 	cout << "No moves yet." << endl;
     } else {

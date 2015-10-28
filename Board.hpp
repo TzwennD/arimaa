@@ -25,10 +25,10 @@ public:
 
  private:
     /*
-     * Attention: From view of gold player,
-     * row 8 is the top row, row 1 is the lowest.
-     * Row 8 is north, row 1 is south.
-     * This vector is upside-down!
+     * Attention: Indices do not match square coordinates!
+     * Squares counted from 1 but indices from 0.
+     * Also North and South are switched because they are
+     * viewed from the gold player.
      */
     std::vector<std::vector<Square> > squares_;
 
@@ -37,7 +37,7 @@ public:
  public:
 
 
-    bool movePiece (Step step);
+    void movePiece (Step step);
 
     /* for initial setup */
     void setPiece (Step step);

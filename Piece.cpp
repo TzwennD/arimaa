@@ -20,11 +20,13 @@ std::ostream &operator<<(std::ostream &os, const Piece &piece)
 	c = ' ';
     else {
 	c = piece.getType();
-	if (piece.isGold())
+	if (piece.isGold()) {
 	    c = std::toupper(c);
+	    os << "\033[1m";
+	}
     }
 
-    os << c;
+    os << c << "\033[0m";
 
     return os;
 }

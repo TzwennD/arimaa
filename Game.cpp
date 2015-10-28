@@ -9,7 +9,7 @@
 using namespace std;
 
 Game::Game () :
-    goldToPlay_(FIRSTCOLOR), rounds_(FIRSTMOVE), finished_(false), currentMove_(FIRSTMOVE,FIRSTCOLOR)
+    goldToPlay_(FIRSTCOLOR), rounds_(FIRSTMOVE), finished_(false)//, currentMove_(FIRSTMOVE,FIRSTCOLOR)
 {
     players_[COLORGOLD] = nullptr;
     players_[COLORSILVER] = nullptr;
@@ -66,12 +66,15 @@ void Game::playOneRound()
     for (int i = 0; i < 2; i++) {
 	bool finished = false;
 	int steps = 0;
+	bool gold = int2color(i);
+	moves_.push_back(Move(rounds_, gold));
 	while(!finished && steps < 4) {
 	    /* sanity checks missing */
 	    steps++;
 	    players_[i]->notify(board_,moves_);
-	    Step s = players_[i]->getStep(!bool(i));
+	    Step s = players_[i]->getStep(gold);
 	    board_.movePiece(s);
+	    moves_.back().addStep(s);
 	    //board_.update_possible_moves();
 	}
     }
@@ -83,6 +86,7 @@ void Game::setStartPosition(bool gold)
     Move m = players_[color2int(gold)]->getStartPosition(gold);
     // check pieces
     board_.applyInitMove(m);
+    moves_.push_back(m);
 }
 
 void Game::start()
@@ -91,6 +95,7 @@ void Game::start()
     setStartPosition(true);
     setStartPosition(false);
     while (!isFinished()) {
+	++rounds_;
 	playOneRound();
     }
 }
