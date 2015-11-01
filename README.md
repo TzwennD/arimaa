@@ -2,5 +2,5 @@
 
 First interface will be textbased -> follow official arimaa notation: http://arimaa.com/arimaa/learn/notation.html
 
-Usage: make && ./arimaa
-Testing ./arimaa < testing_input
+Usage: make && ./arimaa\\
+Testing: ./arimaa < testing_input
