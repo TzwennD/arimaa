@@ -19,7 +19,6 @@ public:
     Piece (piece_type type_, bool isGold_);
     Piece (char ch);
 
-
     virtual ~Piece ( ) = default;
 
     bool isStronger (Piece other) const;
@@ -28,13 +27,19 @@ public:
         return type_;
     }
 
-
     bool isGold() const {
         return gold_;
     }
 
     bool isEmpty() const {
 	return empty_;
+    }
+
+    char toChar() const {
+	char ch = (char)type_;
+	if (gold_)
+	    ch = toupper(ch);
+	return ch;
     }
 
 private:

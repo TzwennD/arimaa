@@ -50,6 +50,12 @@ public:
     char getPiece() const {
 	return piece_;
     }
+    int getDestRow() const {
+	return row_ + direction_.getRow();
+    }
+    int getDestColumn() const {
+	return column_ + direction_.getColumn();
+    }
 };
 
 std::ostream &operator<<(std::ostream &os, const Step &step);

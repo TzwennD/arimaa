@@ -74,7 +74,10 @@ void Game::playOneRound()
 	    /* sanity checks missing */
 	    steps++;
 	    players_[i]->notify(board_,moves_);
+
+	    /* Step validates itself */
 	    Step s = players_[i]->getStep(gold);
+
 	    board_.movePiece(s);
 	    moves_.back().addStep(s);
 	    //board_.update_possible_moves();

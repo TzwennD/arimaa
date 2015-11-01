@@ -10,7 +10,7 @@
 
 using namespace std;
 
-/* squares are upside-down */
+/* Row indices are moved by one */
 Board::Board ( ): squares_(8), deadPieces_(2) {
     for (int i = 1; i <= 8; ++i) {
 	for (int j = 1; j <= 8; ++j) {
@@ -19,7 +19,6 @@ Board::Board ( ): squares_(8), deadPieces_(2) {
     }
 }
 
-/* Attention: no sanity checks for step */
 void
 Board::movePiece (Step step)
 {
@@ -27,25 +26,19 @@ Board::movePiece (Step step)
     int column = step.getColumn();
     Direction direction = step.getDirection();
 
-    int new_row = row;
-    int new_column = column;
+    int new_row = step.getDestRow();
+    int new_column = step.getDestColumn();
 
     if (isPieceFrozen(row,column))
 	throw  invalid_argument("Piece is frozen! Cannot move.");
 
-    new_row += direction.getRow();
-    new_column += direction.getColumn();
-    if (new_row < 0 || new_row >= 8)
-	throw  invalid_argument("Want to go out of the board! Cannot move.");
-    if (new_column < 0 || new_column >= 8)
-	throw  invalid_argument("Want to go out of the board! Cannot move.");
-
-
-    // is there already a piece in the way?
     if (!squares_[new_row][new_column].getPiece().isEmpty())
 	throw  invalid_argument("There is a piece in the way! Cannot move.");
 
-    squares_[new_row][new_column].setPiece(squares_[row][column].getPiece());
+    if (squares_[row][column].getPiece().toChar() != step.getPiece())
+	throw invalid_argument("Piece not at this position. Cannot move.");
+
+    squares_[new_row][new_column].setPiece(step.getPiece());
     squares_[row][column].setPiece(Piece());
 }
 
