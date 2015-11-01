@@ -60,22 +60,23 @@ Board::setPiece (Step step)
     /* validate right position */
     if (row >= 0 && row < 2) {// gold side
 	if (!piece.isGold()) //wrong color
-	    throw invalid_argument("wrong side");
+	    throw invalid_argument("Pieces set to wrong side.");
     }
     else if (row >= 6 && row < 8) {// silver side
 	if (piece.isGold()) // wrong side
-	    throw invalid_argument("wrong side");
+	    throw invalid_argument("Pieces set to wrong side.");
     }
     else // no initial start position
-	throw invalid_argument("No start position");
+	throw invalid_argument("Pieces not set to start position.");
 
     /* square must be free */
     if (!squares_[row][column].isEmpty())
-	throw invalid_argument("Already a piece at that position!");
+	throw invalid_argument("Already a piece at that position.");
 
     squares_[row][column].setPiece(piece);
 }
 
+/* let setPiece validate positions */
 void
 Board::applyInitMove(Move& move)
 {

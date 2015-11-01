@@ -125,10 +125,10 @@ getStartPosition(bool gold)
 	while (!success) {
 	    success = true;
 	    cout << "Where to put piece " << this_fig << ": ";
+	    string input;
+	    cin >> input;
 	    try {
-	    string s;
-	    cin >> s;
-	    p = parseSquare(s);
+	    p = parseSquare(input);
 	    } catch (invalid_argument& inv) {
 		cout << "Retry because of " << inv.what() << endl;
 		success = false;

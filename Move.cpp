@@ -19,6 +19,7 @@ ostream &operator<<(ostream &os, const Move &move)
 	os << " " << s;
     return os;
 }
+
 /* needed?
 Move parseMove(istream &is)
 {

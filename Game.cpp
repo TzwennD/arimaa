@@ -1,4 +1,6 @@
 #include <algorithm>
+#include <vector>
+#include <list>
 
 #include "Game.hpp"
 
@@ -84,7 +86,28 @@ void Game::setStartPosition(bool gold)
 {
     players_[color2int(gold)]->notify(board_,moves_);
     Move m = players_[color2int(gold)]->getStartPosition(gold);
-    // check pieces
+
+    /* check that the right pieces are set */
+    vector<char> ref = {'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r',
+			'c', 'c', 'd', 'd', 'h', 'h', 'm', 'e'};
+    if (gold) {
+	for (vector<char>::iterator it = ref.begin(); it != ref.end(); ++it) {
+	    *it = toupper(*it);
+	}
+    }
+    list<Step> steps = m.getStepList();
+    vector<char> setFigures;
+    setFigures.reserve(16);
+    for (list<Step>::iterator it = steps.begin(); it != steps.end(); ++it) {
+	setFigures.push_back(it->getPiece());
+    }
+    sort(ref.begin(), ref.end());
+    sort(setFigures.begin(), setFigures.end());
+    if (!equal(ref.begin(), ref.end(), setFigures.begin())) {
+	throw invalid_argument("Not the proper pieces used.");
+    }
+
+    /* board does some more validations */
     board_.applyInitMove(m);
     moves_.push_back(m);
 }
