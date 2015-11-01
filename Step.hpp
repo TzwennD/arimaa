@@ -15,10 +15,6 @@
 class Step
 {
 public:
-
-    /* Should not be used */
-    Step();
-
     Step(Direction direction, int column, int row, char piece);
 
     ~Step() = default;
@@ -27,15 +23,17 @@ public:
 	return direction_.getDirection() == STAY;
     }
 
+    Step& operator=(const Step&) = delete;
+
  private:
-    Direction direction_;
-    /* Attention:
-     * This stores the actual board vector indecies,
-     * not the visual names of the squares!
+    const Direction direction_;
+
+    /* Stores column and row as indices on the board.
+     * Not as seen in Arimaa notation.
      */
-    int column_;
-    int row_;
-    char piece_;
+    const int column_;
+    const int row_;
+    const char piece_;
 
  public:
     Direction getDirection() const {
