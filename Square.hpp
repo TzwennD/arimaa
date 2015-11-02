@@ -22,24 +22,21 @@ public:
 
     virtual ~Square ( ) = default;
 
-
     bool isEmpty ( ) const {
 	return piece_.isEmpty();
     }
 
-private:
+    Square& operator=(Square&) = delete;
 
-    int row_;
-    int column_;
-    bool isTrap_;
+private:
+    const int row_;
+    const int column_;
+    const bool isTrap_;
 
     Piece piece_;
     std::set<Direction> movesPossible_;
 
-
 public:
-
-
     bool getIsTrap() const {
         return isTrap_;
     }
@@ -60,14 +57,13 @@ public:
         return column_;
     }
 
-    void setMovesPossible (std::set<Direction> moves)     {
+    void setMovesPossible (std::set<Direction> moves) {
 	movesPossible_ = moves;
     }
 
     std::set<Direction> getMovesPossible () const {
         return movesPossible_;
     }
-
 };
 
 std::ostream &operator<<(std::ostream &os, const Square &square);
