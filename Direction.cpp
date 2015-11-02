@@ -19,7 +19,7 @@ Direction::Direction (direction_type direction): row_(0), column_(0), direction_
 	column_ = -1;
 	break;
     case STAY:
-	// stay means (0,0) = default
+	/* stay means (0,0) = default */
 	break;
     default:
 	throw invalid_argument("Wrong direction!");
@@ -43,7 +43,7 @@ ostream &operator<<(ostream &os, const Direction &direction)
 	os << "w";
 	break;
     case STAY:
-	//dont't print anything
+	/* dont't print anything */
 	break;
     default:
 	throw invalid_argument("Wrong direction!");

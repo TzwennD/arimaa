@@ -9,38 +9,36 @@
 
 class Direction
 {
- public:
-
+public:
     Direction();
     Direction (direction_type direction);
 
     virtual ~Direction ( ) {}
+    Direction& operator=(const Direction&) = delete;
 
 
- private:
-   int row_;
-   int column_;
-   direction_type direction_;
+private:
+    int row_;
+    int column_;
+    const direction_type direction_;
 
- public:
+public:
+    int getRow() const {
+	return row_;
+    }
 
-   int getRow() const {
-       return row_;
-   }
+    int getColumn() const {
+	return column_;
+    }
 
-   int getColumn() const {
-       return column_;
-   }
+    direction_type getDirection() const {
+	return direction_;
+    }
 
-   direction_type getDirection() const {
-       return direction_;
-   }
-
-   // required for sets
-   bool operator<(const Direction &other) const {
-     return getDirection() < other.getDirection();
-   }
-
+    /* required for sets */
+    bool operator<(const Direction &other) const {
+	return getDirection() < other.getDirection();
+    }
 };
 
 std::ostream &operator<<(std::ostream &os, const Direction &direction);
