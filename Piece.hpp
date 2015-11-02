@@ -19,6 +19,9 @@ public:
     Piece (piece_type type_, bool isGold_);
     Piece (char ch);
 
+    /* Is used and must be remembered as a proper construction point. */
+    Piece& operator=(Piece&) = default;
+
     virtual ~Piece ( ) = default;
 
     bool isStronger (Piece other) const;
