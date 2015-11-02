@@ -20,12 +20,13 @@ public:
 
     virtual ~Move() = default;
 
+    Move& operator=(Move&) = delete;
 
  private:
     std::list<Step> stepList_;
 
-    int moveNr_;
-    bool gold_;
+    const int moveNr_;
+    const bool gold_;
 
  public:
     int getMoveNr() const {
@@ -46,6 +47,5 @@ public:
 };
 
 std::ostream &operator<<(std::ostream &os, const Move &move);
-//Move parseMove(std::istream &is);
 
 #endif // MOVE_H
