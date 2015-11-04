@@ -29,8 +29,14 @@ public:
     Square& operator=(Square&) = delete;
 
 private:
+    /*
+     * Attention:
+     * Stored row and column are game row and column.
+     * Not indices into the board vector!
+     */
     const int row_;
     const int column_;
+
     const bool isTrap_;
 
     Piece piece_;

@@ -34,10 +34,16 @@ public:
 
     std::vector<std::list<Piece*> > deadPieces_;
 
- public:
+    /*
+     * Store square if next step must complete push at this position
+     * Otherwise null
+     */
+    Square *pushSquare;
+
+public:
 
 
-    void movePiece (Step step);
+    void movePiece (Step step, bool gold);
 
     /* for initial setup */
     void setPiece (Step step);

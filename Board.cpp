@@ -11,7 +11,7 @@
 using namespace std;
 
 /* Row indices are moved by one */
-Board::Board ( ): squares_(8), deadPieces_(2) {
+Board::Board ( ): squares_(8), deadPieces_(2), pushSquare(nullptr) {
     for (int i = 1; i <= 8; ++i) {
 	for (int j = 1; j <= 8; ++j) {
 	    squares_[i-1].push_back(Square(i,j));
@@ -20,7 +20,7 @@ Board::Board ( ): squares_(8), deadPieces_(2) {
 }
 
 void
-Board::movePiece (Step step)
+Board::movePiece (Step step, bool gold)
 {
     int row = step.getRow();
     int column = step.getColumn();
@@ -29,7 +29,8 @@ Board::movePiece (Step step)
     int new_row = step.getDestRow();
     int new_column = step.getDestColumn();
 
-    if (isPieceFrozen(row,column))
+    if (squares_[row][column].getPiece().isGold() == gold
+	&& isPieceFrozen(row,column))
 	throw  invalid_argument("Piece is frozen! Cannot move.");
 
     if (!squares_[new_row][new_column].getPiece().isEmpty())
@@ -38,8 +39,27 @@ Board::movePiece (Step step)
     if (squares_[row][column].getPiece().toChar() != step.getPiece())
 	throw invalid_argument("Piece not at this position. Cannot move.");
 
+    if (pushSquare) {
+	if (pushSquare->getRow() != new_row
+	    || pushSquare->getColumn() != new_column)
+	    throw invalid_argument("You have to complete the push.");
+	if (squares_[row][column].getPiece().isGold() != gold)
+	    throw invalid_argument("You try to push with an opponants piece.");
+    }
+
+    if (squares_[row][column].getPiece().isGold() != gold)
+	; /* TODO: check if pushing is possible here */
+
     squares_[new_row][new_column].setPiece(step.getPiece());
     squares_[row][column].setPiece(Piece());
+
+    /* pushing completed? */
+    if (pushSquare)
+	pushSquare = nullptr;
+
+    /* currently pushing? */
+    if (squares_[new_row][new_column].getPiece().isGold() != gold)
+	pushSquare = &squares_[row][column];
 }
 
 /* for initial setup */
@@ -103,17 +123,15 @@ Board::isPieceFrozen (int row, int column) const
 	int new_row = row + d.getRow();
 	int new_column = column + d.getColumn();
 
-	if (new_row < 0 || new_row >= 8 ||
-	    new_column < 0 || new_column >= 8 )
+	if (new_row < 0 || new_row >= 8 || new_column < 0 || new_column >= 8 )
 	    continue;
-
+	if (squares_[new_row][new_column].getPiece().isEmpty())
+	    continue;
 	if (squares_[new_row][new_column].getPiece().isGold() == ownColor)
 	    return false;
-	else {
-	    if (squares_[row][column].getPiece().
-		isStronger(squares_[new_row][new_column].getPiece()))
-		ret = true;
-	}
+	if (squares_[row][column].getPiece().
+	    isStronger(squares_[new_row][new_column].getPiece()))
+	    ret = true;
     }
 
     return ret;
@@ -123,22 +141,25 @@ Board::isPieceFrozen (int row, int column) const
 void
 Board::updatePossibleMoves (bool isPlayerGold )
 {
-    for (std::vector<Square> row : squares_) {
-	for (Square square : row) {
+    if (pushSquare) {
+	/* only own pieces can move only to this square */
+	// TODO
+	return;
+    }
+    for (int row = 0; row < 8; ++row) {
+	for (int column = 0; column < 8; ++column) {
+	    Square square = squares_[row][column];
 	    if (square.isEmpty()) {
 		square.setMovesPossible(set<Direction>());
-		continue;
-	    }
-	    if (square.getPiece().isGold() == isPlayerGold) {
-		if (isPieceFrozen(square.getRow(),square.getColumn())) {
+	    } else if (square.getPiece().isGold() == isPlayerGold) {
+		if (isPieceFrozen(row, column)) {
 		    square.setMovesPossible(set<Direction>());
-		    continue;
-		} else
+		} else {
 		    square.setMovesPossible(
-			getFreeDirections(square.getRow(), square.getColumn()));
+			getFreeDirections(row, column));
+		}
 	    } else { /* foreign colour */
-		/* TODO */
-		square.setMovesPossible(set<Direction>());
+		set<Direction> dir();
 		/*int free_direct = get_free_directions(square);
 		  if (free_direct) */
 		/* test all not free neighbour square */
@@ -158,14 +179,12 @@ Board::getFreeDirections (int row, int column) const
     /* return set */
     set<Direction> ret;
 
-
     /* all possible directions */
     vector<Direction> allDirections;
     allDirections.push_back(Direction(NORTH));
     allDirections.push_back(Direction(EAST));
     allDirections.push_back(Direction(SOUTH));
     allDirections.push_back(Direction(WEST));
-
 
     for(Direction &d : allDirections) {
 	int new_row = row + d.getRow();
