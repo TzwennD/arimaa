@@ -53,21 +53,7 @@ Board::movePiece (Step step, bool gold, int stepNr)
         pushing = true;
         if (stepNr == 4)
             throw invalid_argument("Cannot push as last step.");
-
-        bool ownStrongerPiece = false;
-        for(Direction &d : Direction::getAllDirections()) {
-            int new_row = row + d.getRow();
-            int new_column = column + d.getColumn();
-            Piece neighbourPiece = squares_[new_row][new_column].getPiece();
-            if (!neighbourPiece.isEmpty()
-                && neighbourPiece.isGold() == gold
-                && neighbourPiece.isStronger(squares_[row][column].getPiece())
-                && !isPieceFrozen(new_row, new_column)) {
-                ownStrongerPiece = true;
-                break;
-            }
-        }
-        if (!ownStrongerPiece)
+        if (!isStrongerPieceNear(row, column, gold))
             throw invalid_argument("Pushing without stronger piece, that can do that.");
     }
 
@@ -86,6 +72,23 @@ Board::movePiece (Step step, bool gold, int stepNr)
         pushSquare = &squares_[row][column];
 }
 
+bool
+Board::isStrongerPieceNear(int row, int column, bool gold) const
+{
+    for(Direction &d : Direction::getAllDirections()) {
+        int neighbor_row = row + d.getRow();
+        int neighbor_column = column + d.getColumn();
+        Piece neighbourPiece = squares_[neighbor_row][neighbor_column].getPiece();
+        if (!neighbourPiece.isEmpty()
+            && neighbourPiece.isGold() == gold
+            && neighbourPiece.isStronger(squares_[row][column].getPiece())
+            && !isPieceFrozen(neighbor_row, neighbor_column)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void
 Board::removeTrappedPieces()
 {
@@ -97,12 +100,8 @@ Board::removeTrappedPieces()
                 continue;
             /* there is a piece -> is it being hold by a friend? */
             bool hold = false;
-            for(Direction &d : Direction::getAllDirections()) {
-                int new_row = row + d.getRow();
-                int new_column = column + d.getColumn();
-                Piece neighbourPiece = squares_[new_row][new_column].getPiece();
-                if (!neighbourPiece.isEmpty()
-                    && neighbourPiece.isGold() == thisPiece.isGold()) {
+            for(Piece &p : getAllNeighboringPieces(row, column)) {
+                if (!p.isEmpty() && p.isGold() == thisPiece.isGold()) {
                     hold = true;
                     break;
                 }
@@ -166,18 +165,12 @@ Board::isPieceFrozen (int row, int column) const
      */
     bool ret = false;
 
-    for(Direction &d : Direction::getAllDirections()) {
-        int new_row = row + d.getRow();
-        int new_column = column + d.getColumn();
-
-        if (new_row < 0 || new_row >= 8 || new_column < 0 || new_column >= 8 )
+    for(Piece &p: getAllNeighboringPieces(row, column)) {
+        if (p.isEmpty())
             continue;
-        if (squares_[new_row][new_column].getPiece().isEmpty())
-            continue;
-        if (squares_[new_row][new_column].getPiece().isGold() == ownColor)
+        if (p.isGold() == ownColor)
             return false;
-        if (squares_[new_row][new_column].getPiece().
-            isStronger(squares_[row][column].getPiece()))
+        if (p.isStronger(squares_[row][column].getPiece()))
             ret = true;
     }
 
@@ -226,7 +219,7 @@ Board::getFreeDirections (int row, int column) const
     /* return set */
     set<Direction> ret;
 
-    for(Direction &d : Direction::getAllDirections()) {
+    for (Direction &d: Direction::getAllDirections()) {
         int new_row = row + d.getRow();
         int new_column = column + d.getColumn();
 
@@ -241,6 +234,25 @@ Board::getFreeDirections (int row, int column) const
 
     return ret;
 }
+
+vector<Piece>
+Board::getAllNeighboringPieces(int row, int column) const
+{
+    vector<Piece> ret;
+
+    for (Direction &d: Direction::getAllDirections()) {
+        int new_row = row + d.getRow();
+        int new_column = column + d.getColumn();
+
+        if (new_row < 0 || new_row >= 8 ||
+            new_column < 0 || new_column >= 8 )
+            continue;
+        ret.push_back(squares_[new_row][new_column].getPiece());
+    }
+
+    return move(ret);
+}
+
 
 ostream &operator<<(std::ostream &os, const Board &board)
 {

@@ -9,6 +9,7 @@
 #include "Square.hpp"
 #include "Step.hpp"
 #include "Move.hpp"
+#include "Piece.hpp"
 
 /**
  * class Board
@@ -61,7 +62,11 @@ private:
 
     std::set<Direction> getFreeDirections (int row, int column) const;
 
+    /* movePiece helper*/
     void removeTrappedPieces();
+    bool isStrongerPieceNear(int row, int column, bool gold) const;
+
+    std::vector<Piece> getAllNeighboringPieces(int row, int column) const;
 };
 
 std::ostream &operator<<(std::ostream &os, const Board &board);
