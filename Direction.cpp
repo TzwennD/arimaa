@@ -7,22 +7,22 @@ Direction::Direction (): row_(0), column_(0), direction_(STAY) {}
 Direction::Direction (direction_type direction): row_(0), column_(0), direction_(direction) {
     switch (direction) {
     case NORTH:
-	row_ = 1;
-	break;
+        row_ = 1;
+        break;
     case EAST:
-	column_ = 1;
-	break;
+        column_ = 1;
+        break;
     case SOUTH:
-	row_ = -1;
-	break;
+        row_ = -1;
+        break;
     case WEST:
-	column_ = -1;
-	break;
+        column_ = -1;
+        break;
     case STAY:
-	/* stay means (0,0) = default */
-	break;
+        /* stay means (0,0) = default */
+        break;
     default:
-	throw invalid_argument("Wrong direction!");
+        throw invalid_argument("Wrong direction!");
     }
 }
 
@@ -31,22 +31,22 @@ ostream &operator<<(ostream &os, const Direction &direction)
 {
     switch (direction.getDirection()) {
     case NORTH:
-	os << "n";
-	break;
+        os << "n";
+        break;
     case EAST:
-	os << "e";
-	break;
+        os << "e";
+        break;
     case SOUTH:
-	os << "s";
-	break;
+        os << "s";
+        break;
     case WEST:
-	os << "w";
-	break;
+        os << "w";
+        break;
     case STAY:
-	/* dont't print anything */
-	break;
+        /* dont't print anything */
+        break;
     default:
-	throw invalid_argument("Wrong direction!");
+        throw invalid_argument("Wrong direction!");
     }
     return os;
 }

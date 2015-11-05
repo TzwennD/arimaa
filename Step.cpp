@@ -12,13 +12,13 @@ Step::Step (Direction direction, int column, int row, char piece):
 {
     /* Check starting square */
     if (row < 0 || row >= 8 || column < 0 || column >= 8)
-	throw invalid_argument("Invalid step: Coming from out of the board.");
+        throw invalid_argument("Invalid step: Coming from out of the board.");
 
     /* Check piece */
     vector<char> figures = {'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r',
-			    'c', 'c', 'd', 'd', 'h', 'h', 'm', 'e'};
+                            'c', 'c', 'd', 'd', 'h', 'h', 'm', 'e'};
     if (find(figures.begin(), figures.end(), tolower(piece)) == figures.end())
-	throw invalid_argument("Invalid step: Wrong piece.");
+        throw invalid_argument("Invalid step: Wrong piece.");
 
     /* Check destination */
     int new_row = row;
@@ -26,7 +26,7 @@ Step::Step (Direction direction, int column, int row, char piece):
     new_row += direction.getRow();
     new_column += direction.getColumn();
     if (new_row < 0 || new_row >= 8 || new_column < 0 || new_column >= 8)
-	throw  invalid_argument("Invalid step: Going out of the board!");
+        throw  invalid_argument("Invalid step: Going out of the board!");
 }
 
 ostream &operator<<(ostream &os, const Step &step)

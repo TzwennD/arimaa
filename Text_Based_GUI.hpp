@@ -42,7 +42,7 @@ public:
 
  public:
     Game& getGame() {
-	return game;
+        return game;
     }
 
 };

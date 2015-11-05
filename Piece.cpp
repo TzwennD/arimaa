@@ -17,13 +17,13 @@ std::ostream &operator<<(std::ostream &os, const Piece &piece)
     char c;
 
     if (piece.isEmpty())
-	c = ' ';
+        c = ' ';
     else {
-	c = piece.getType();
-	if (piece.isGold()) {
-	    c = std::toupper(c);
-	    os << "\033[1m";
-	}
+        c = piece.getType();
+        if (piece.isGold()) {
+            c = std::toupper(c);
+            os << "\033[1m";
+        }
     }
 
     os << c << "\033[0m";

@@ -78,7 +78,7 @@ public:
     }
 
     bool isGoldToPlay() const {
-	return goldToPlay_;
+        return goldToPlay_;
     }
 
     std::list<Move> getMoves ( ) const {
@@ -86,28 +86,28 @@ public:
     }
 
     Move getCurrentMove() const {
-	return moves_.back();
-	}
+        return moves_.back();
+        }
 
     friend std::ostream &operator<<(std::ostream &os, const Game &game);
 private:
 
     static int color2int(bool gold) {
-	if (gold)
-	    return COLORGOLD;
-	else
-	    return COLORSILVER;
+        if (gold)
+            return COLORGOLD;
+        else
+            return COLORSILVER;
     }
 
     static bool int2color(int i) {
-	switch(i) {
-	case COLORGOLD:
-	    return true;
-	case COLORSILVER:
-	    return false;
-	default:
-	    throw std::invalid_argument("There are only two players.");
-	}
+        switch(i) {
+        case COLORGOLD:
+            return true;
+        case COLORSILVER:
+            return false;
+        default:
+            throw std::invalid_argument("There are only two players.");
+        }
     }
 
     void playOneRound();

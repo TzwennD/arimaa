@@ -20,7 +20,7 @@ public:
     ~Step() = default;
 
     bool isInitialisationStep() const {
-	return direction_.getDirection() == STAY;
+        return direction_.getDirection() == STAY;
     }
 
     Step& operator=(const Step&) = delete;
@@ -37,22 +37,22 @@ public:
 
  public:
     Direction getDirection() const {
-	return direction_;
+        return direction_;
     }
     int getRow() const {
-	return row_;
+        return row_;
     }
     int getColumn() const {
-	return column_;
+        return column_;
     }
     char getPiece() const {
-	return piece_;
+        return piece_;
     }
     int getDestRow() const {
-	return row_ + direction_.getRow();
+        return row_ + direction_.getRow();
     }
     int getDestColumn() const {
-	return column_ + direction_.getColumn();
+        return column_ + direction_.getColumn();
     }
 };
 

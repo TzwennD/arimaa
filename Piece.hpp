@@ -35,14 +35,14 @@ public:
     }
 
     bool isEmpty() const {
-	return empty_;
+        return empty_;
     }
 
     char toChar() const {
-	char ch = (char)type_;
-	if (gold_)
-	    ch = toupper(ch);
-	return ch;
+        char ch = (char)type_;
+        if (gold_)
+            ch = toupper(ch);
+        return ch;
     }
 
 private:

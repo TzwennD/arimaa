@@ -29,20 +29,20 @@ void Game::registerObserver (Observer *newObserver, observer_config config )
 {
     switch (config) {
     case NONE:
-	observerCollectionNone_.push_back(newObserver);
-	return;
+        observerCollectionNone_.push_back(newObserver);
+        return;
     case GOLD:
-	observerCollection_[COLORGOLD].push_back(newObserver);
-	return;
+        observerCollection_[COLORGOLD].push_back(newObserver);
+        return;
     case SILVER:
-	observerCollection_[COLORSILVER].push_back(newObserver);
-	return;
+        observerCollection_[COLORSILVER].push_back(newObserver);
+        return;
     case ALL:
-	observerCollectionAll_.push_back(newObserver);
-	return;
+        observerCollectionAll_.push_back(newObserver);
+        return;
     default:
-	throw std::invalid_argument("Wrong configuration given!");
-	return;
+        throw std::invalid_argument("Wrong configuration given!");
+        return;
     }
 }
 
@@ -53,7 +53,7 @@ void Game::addPlayer(Player *newPlayer, bool gold)
 {
     int color = color2int(gold);
     if (players_[color] != nullptr)
-	throw std::invalid_argument("Already player with this color registered!");
+        throw std::invalid_argument("Already player with this color registered!");
     players_[color] = newPlayer;
     observerCollection_[color].push_back(newPlayer);
 }
@@ -63,24 +63,24 @@ void Game::addPlayer(Player *newPlayer, bool gold)
 void Game::playOneRound()
 {
     for_each(observerCollectionAll_.begin(), observerCollectionAll_.end(),
-	     [&] (Observer* ob) {ob->notify(board_, moves_); });
+             [&] (Observer* ob) {ob->notify(board_, moves_); });
 
     for (int i = 0; i < 2; i++) {
-	bool finished = false;
-	int steps = 0;
-	bool gold = int2color(i);
-	moves_.push_back(Move(rounds_, gold));
-	while(!finished && steps < 4) {
-	    /* sanity checks missing */
-	    board_.updatePossibleMoves(gold);
-	    players_[i]->notify(board_,moves_);
+        bool finished = false;
+        int steps = 0;
+        bool gold = int2color(i);
+        moves_.push_back(Move(rounds_, gold));
+        while(!finished && steps < 4) {
+            /* sanity checks missing */
+            board_.updatePossibleMoves(gold);
+            players_[i]->notify(board_,moves_);
 
-	    /* Step validates itself */
-	    Step s = players_[i]->getStep(gold);
-	    ++steps;
-	    board_.movePiece(s, gold, steps);
-	    moves_.back().addStep(s);
-	}
+            /* Step validates itself */
+            Step s = players_[i]->getStep(gold);
+            ++steps;
+            board_.movePiece(s, gold, steps);
+            moves_.back().addStep(s);
+        }
     }
 }
 
@@ -91,22 +91,22 @@ void Game::setStartPosition(bool gold)
 
     /* check that the right pieces are set */
     vector<char> ref = {'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r',
-			'c', 'c', 'd', 'd', 'h', 'h', 'm', 'e'};
+                        'c', 'c', 'd', 'd', 'h', 'h', 'm', 'e'};
     if (gold) {
-	for (vector<char>::iterator it = ref.begin(); it != ref.end(); ++it) {
-	    *it = toupper(*it);
-	}
+        for (vector<char>::iterator it = ref.begin(); it != ref.end(); ++it) {
+            *it = toupper(*it);
+        }
     }
     list<Step> steps = m.getStepList();
     vector<char> setFigures;
     setFigures.reserve(16);
     for (list<Step>::iterator it = steps.begin(); it != steps.end(); ++it) {
-	setFigures.push_back(it->getPiece());
+        setFigures.push_back(it->getPiece());
     }
     sort(ref.begin(), ref.end());
     sort(setFigures.begin(), setFigures.end());
     if (!equal(ref.begin(), ref.end(), setFigures.begin())) {
-	throw invalid_argument("Not the proper pieces used.");
+        throw invalid_argument("Not the proper pieces used.");
     }
 
     /* board does some more validations */
@@ -120,8 +120,8 @@ void Game::start()
     setStartPosition(true);
     setStartPosition(false);
     while (!isFinished()) {
-	++rounds_;
-	playOneRound();
+        ++rounds_;
+        playOneRound();
     }
 }
 
@@ -133,18 +133,18 @@ bool Game::isFinished()
 void Game::notifyObserver() const
 {
     // if /* steps */ {
-    // 	for each observer in observer.list(current_culour)
-    // 		     observer.notify(b, curr_step);
-    // 	for each observer in observer.list(all)
-    // 		     observer.notify(b, curr_step);
+    //         for each observer in observer.list(current_culour)
+    //                      observer.notify(b, curr_step);
+    //         for each observer in observer.list(all)
+    //                      observer.notify(b, curr_step);
     // } else if /* global */ {
-    // 	for each observer in each list
-    // 		     observer.notify(b, no_diff);
+    //         for each observer in each list
+    //                      observer.notify(b, no_diff);
     // } else /* move colour just finished */ {
-    // 	for each observer in observer.None
-    // 		     observer.notify(b, whole_move);
-    // 	for each observer in observer.list(not_current_colour)
-    // 		     observer.notify(b, whole_move);
+    //         for each observer in observer.None
+    //                      observer.notify(b, whole_move);
+    //         for each observer in observer.list(not_current_colour)
+    //                      observer.notify(b, whole_move);
     // }
 }
 

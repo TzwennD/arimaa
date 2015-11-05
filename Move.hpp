@@ -30,11 +30,11 @@ public:
 
  public:
     int getMoveNr() const {
-	return moveNr_;
+        return moveNr_;
     }
 
     bool isGold() const {
-	return gold_;
+        return gold_;
     }
 
     std::list<Step> getStepList() const {
@@ -42,7 +42,7 @@ public:
     }
 
     void addStep(Step s) {
-	stepList_.push_back(s);
+        stepList_.push_back(s);
     }
 };
 

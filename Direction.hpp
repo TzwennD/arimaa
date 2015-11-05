@@ -24,20 +24,20 @@ private:
 
 public:
     int getRow() const {
-	return row_;
+        return row_;
     }
 
     int getColumn() const {
-	return column_;
+        return column_;
     }
 
     direction_type getDirection() const {
-	return direction_;
+        return direction_;
     }
 
     /* required for sets */
     bool operator<(const Direction &other) const {
-	return getDirection() < other.getDirection();
+        return getDirection() < other.getDirection();
     }
 };
 

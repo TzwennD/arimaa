@@ -28,18 +28,18 @@ static pair<int, int> parseSquare(string& s)
 
     /* Sanity checks */
     if (s == "")
-	throw invalid_argument("String was empty");
+        throw invalid_argument("String was empty");
     if (s.length() != 2)
-	throw invalid_argument("Not the right size!");
+        throw invalid_argument("Not the right size!");
     vector<char> alphabet = {'a','b','c','d','e','f','g','h'};
 
     /* Column */
     int col;
     vector<char>::iterator it = find(alphabet.begin(), alphabet.end(), s[0]);
     if (it == alphabet.end())
-	throw invalid_argument("Wrong column.");
+        throw invalid_argument("Wrong column.");
     else
-	col = distance(alphabet.begin(), it);
+        col = distance(alphabet.begin(), it);
 
     /* Row */
     int row;
@@ -47,8 +47,8 @@ static pair<int, int> parseSquare(string& s)
     ss << s[1];
     ss >> row;
     if (row < 1 || row > 8) {
-	cout << "Row was " << row << endl;
-	throw invalid_argument("Wrong row.");
+        cout << "Row was " << row << endl;
+        throw invalid_argument("Wrong row.");
     }
     row--;
 
@@ -58,9 +58,9 @@ static pair<int, int> parseSquare(string& s)
 static Step parseStep(string& s)
 {
     if (s == "")
-	throw invalid_argument("String was empty -> last Step already given?");
+        throw invalid_argument("String was empty -> last Step already given?");
     if (s.length() != 4)
-	throw invalid_argument("Not the right size!");
+        throw invalid_argument("Not the right size!");
     /* is s == end : throw exception that can be handled by the game to end move*/
 
     /* sanity checks missing */
@@ -83,9 +83,9 @@ getStep(bool gold)
 {
     cout << "Player ";
     if (gold)
-	cout << "gold";
+        cout << "gold";
     else
-	cout << "silver";
+        cout << "silver";
     cout << ": What is your next step?" << endl;
     string st;
     cin >> st;
@@ -101,42 +101,42 @@ Text_Based_GUI::
 getStartPosition(bool gold)
 {
     vector<char> figures = {'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r',
-			    'c', 'c', 'd', 'd', 'h', 'h', 'm', 'e'};
+                            'c', 'c', 'd', 'd', 'h', 'h', 'm', 'e'};
 
     cout << "Player ";
     if (gold)
-	cout << "gold";
+        cout << "gold";
     else
-	cout << "silver";
+        cout << "silver";
     cout << ": Where to put your pieces?" << endl;
     if(gold)
-	cout << "Your start rows are rows 1 and 2. " << endl;
+        cout << "Your start rows are rows 1 and 2. " << endl;
     else
-	cout << "Your start rows are rows 7 and 8. " << endl;
+        cout << "Your start rows are rows 7 and 8. " << endl;
 
 
     Move m(1, gold);
     for (unsigned i = 0; i < figures.size(); i++) {
-	char this_fig = figures[i];
-	if (gold)
-	    this_fig = toupper(this_fig);
-	bool success = false;
-	pair<int,int> p;
-	while (!success) {
-	    success = true;
-	    cout << "Where to put piece " << this_fig << ": ";
-	    string input;
-	    cin >> input;
-	    try {
-	    p = parseSquare(input);
-	    } catch (invalid_argument& inv) {
-		cout << "Retry because of " << inv.what() << endl;
-		success = false;
-		continue;
-	    }
-	    Step s(STAY, p.first, p.second, this_fig);
-	    m.addStep(s);
-	}
+        char this_fig = figures[i];
+        if (gold)
+            this_fig = toupper(this_fig);
+        bool success = false;
+        pair<int,int> p;
+        while (!success) {
+            success = true;
+            cout << "Where to put piece " << this_fig << ": ";
+            string input;
+            cin >> input;
+            try {
+            p = parseSquare(input);
+            } catch (invalid_argument& inv) {
+                cout << "Retry because of " << inv.what() << endl;
+                success = false;
+                continue;
+            }
+            Step s(STAY, p.first, p.second, this_fig);
+            m.addStep(s);
+        }
     }
     return m;
 }
@@ -147,12 +147,12 @@ Text_Based_GUI::
 notify (Board copy_board, list<Move> changes )
 {
     cout << "====================================" << endl
-	 << "Current game status:" << endl;
+         << "Current game status:" << endl;
     if (changes.empty()) {
-	cout << "No moves yet." << endl;
+        cout << "No moves yet." << endl;
     } else {
-	Move& last = changes.back();
-	cout << last << endl;
+        Move& last = changes.back();
+        cout << last << endl;
     }
     cout << copy_board << endl;
 }

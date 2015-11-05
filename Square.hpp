@@ -23,7 +23,7 @@ public:
     virtual ~Square ( ) = default;
 
     bool isEmpty ( ) const {
-	return piece_.isEmpty();
+        return piece_.isEmpty();
     }
 
     Square& operator=(Square&) = delete;
@@ -47,7 +47,7 @@ public:
     }
 
     void setPiece(Piece new_var) {
-	piece_ = new_var;
+        piece_ = new_var;
     }
 
     Piece getPiece() const {
@@ -63,7 +63,7 @@ public:
     }
 
     void setMovesPossible (std::set<Direction> moves) {
-	movesPossible_ = moves;
+        movesPossible_ = moves;
     }
 
     std::set<Direction> getMovesPossible () const {
