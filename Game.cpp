@@ -77,8 +77,8 @@ void Game::playOneRound()
 
 	    /* Step validates itself */
 	    Step s = players_[i]->getStep(gold);
-	    steps++;
-	    board_.movePiece(s, gold);
+	    ++steps;
+	    board_.movePiece(s, gold, steps);
 	    moves_.back().addStep(s);
 	}
     }

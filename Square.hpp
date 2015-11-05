@@ -31,8 +31,7 @@ public:
 private:
     /*
      * Attention:
-     * Stored row and column are game row and column.
-     * Not indices into the board vector!
+     * Stores indices into the board vector.
      */
     const int row_;
     const int column_;

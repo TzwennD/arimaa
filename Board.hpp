@@ -43,7 +43,7 @@ public:
 public:
 
 
-    void movePiece (Step step, bool gold);
+    void movePiece (Step step, bool gold, int stepNr);
 
     /* for initial setup */
     void setPiece (Step step);
