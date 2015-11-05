@@ -48,7 +48,9 @@ Board::movePiece (Step step, bool gold, int stepNr)
     }
 
     /* when pushing, check if own stronger piece is near */
+    bool pushing = false;
     if (squares_[row][column].getPiece().isGold() != gold) {
+        pushing = true;
         if (stepNr == 4)
             throw invalid_argument("Cannot push as last step.");
 
@@ -85,16 +87,53 @@ Board::movePiece (Step step, bool gold, int stepNr)
             throw invalid_argument("Pushing without stronger piece, that can do that.");
     }
 
+    /* do actual movement */
     squares_[new_row][new_column].setPiece(step.getPiece());
     squares_[row][column].setPiece(Piece());
+
+    removeTrappedPieces();
 
     /* pushing completed? */
     if (pushSquare)
         pushSquare = nullptr;
 
     /* currently pushing? */
-    if (squares_[new_row][new_column].getPiece().isGold() != gold)
+    if (pushing)
         pushSquare = &squares_[row][column];
+}
+
+void
+Board::removeTrappedPieces()
+{
+    vector<int> traps = {2, 5};
+    for (int row: traps) {
+        for (int column: traps) {
+            Piece thisPiece = squares_[row][column].getPiece();
+            if (thisPiece.isEmpty())
+                continue;
+            /* there is a piece -> is it being hold by a friend? */
+            bool hold = false;
+            vector<Direction> allDirections;
+            allDirections.push_back(Direction(NORTH));
+            allDirections.push_back(Direction(EAST));
+            allDirections.push_back(Direction(SOUTH));
+            allDirections.push_back(Direction(WEST));
+            for(Direction &d : allDirections) {
+                int new_row = row + d.getRow();
+                int new_column = column + d.getColumn();
+                Piece neighbourPiece = squares_[new_row][new_column].getPiece();
+                if (!neighbourPiece.isEmpty()
+                    && neighbourPiece.isGold() == thisPiece.isGold()) {
+                    hold = true;
+                    break;
+                }
+            }
+            if (!hold) {
+                deadPieces_.push_back(thisPiece);
+                squares_[row][column].setPiece(Piece());
+            }
+        }
+    }
 }
 
 /* for initial setup */
