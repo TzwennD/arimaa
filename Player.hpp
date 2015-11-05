@@ -8,9 +8,9 @@
 
 
 /**
-  * class Player
-  * gets board information through notify-function inherited by Observer
-  */
+ * class Player
+ * gets board information through notify-function inherited by Observer
+ */
 class Player : public Observer
 {
 public:

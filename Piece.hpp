@@ -8,9 +8,9 @@
 #include "enums.hpp"
 
 /**
-  * class Piece
-  *
-  */
+ * class Piece
+ *
+ */
 
 class Piece
 {

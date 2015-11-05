@@ -8,9 +8,9 @@
 #include "Step.hpp"
 
 /**
-  * class Move
-  *
-  */
+ * class Move
+ *
+ */
 
 class Move
 {
@@ -22,13 +22,13 @@ public:
 
     Move& operator=(Move&) = delete;
 
- private:
+private:
     std::list<Step> stepList_;
 
     const int moveNr_;
     const bool gold_;
 
- public:
+public:
     int getMoveNr() const {
         return moveNr_;
     }

@@ -9,9 +9,9 @@
 #include "Observer.hpp"
 
 /**
-  * class Text_Based_GUI
-  *
-  */
+ * class Text_Based_GUI
+ *
+ */
 
 class Text_Based_GUI : public Player
 {
@@ -37,10 +37,10 @@ public:
 
     void notify(Board copy_board, std::list<Move> changes);
 
- private:
+private:
     Game game;
 
- public:
+public:
     Game& getGame() {
         return game;
     }

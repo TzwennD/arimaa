@@ -128,7 +128,7 @@ getStartPosition(bool gold)
             string input;
             cin >> input;
             try {
-            p = parseSquare(input);
+                p = parseSquare(input);
             } catch (invalid_argument& inv) {
                 cout << "Retry because of " << inv.what() << endl;
                 success = false;

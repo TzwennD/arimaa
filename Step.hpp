@@ -9,9 +9,9 @@
 #include "Direction.hpp"
 
 /**
-  * class Step
-  *
-  */
+ * class Step
+ *
+ */
 class Step
 {
 public:
@@ -25,7 +25,7 @@ public:
 
     Step& operator=(const Step&) = delete;
 
- private:
+private:
     const Direction direction_;
 
     /* Stores column and row as indices on the board.
@@ -35,7 +35,7 @@ public:
     const int row_;
     const char piece_;
 
- public:
+public:
     Direction getDirection() const {
         return direction_;
     }

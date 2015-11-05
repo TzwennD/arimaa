@@ -13,14 +13,14 @@
 
 class Game
 {
- private:
+private:
     static const int FIRSTMOVE = 1;
     static const bool FIRSTCOLOR = true;
 
     static const int COLORGOLD = 0;
     static const int COLORSILVER = 1;
 
- public:
+public:
 
     Game ();
 
@@ -87,7 +87,7 @@ public:
 
     Move getCurrentMove() const {
         return moves_.back();
-        }
+    }
 
     friend std::ostream &operator<<(std::ostream &os, const Game &game);
 private:

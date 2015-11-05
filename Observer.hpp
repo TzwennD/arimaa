@@ -7,9 +7,9 @@
 #include "Move.hpp"
 
 /**
-  * class Observer
-  *
-  */
+ * class Observer
+ *
+ */
 
 class Observer
 {

@@ -11,9 +11,9 @@
 #include "Move.hpp"
 
 /**
-  * class Board
-  *
-  */
+ * class Board
+ *
+ */
 
 class Board
 {
@@ -23,7 +23,7 @@ public:
     virtual ~Board ( ) = default;
 
 
- private:
+private:
     /*
      * Attention: Indices do not match square coordinates!
      * Squares counted from 1 but indices from 0.
