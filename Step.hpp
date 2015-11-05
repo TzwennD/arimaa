@@ -15,6 +15,11 @@
 class Step
 {
 public:
+    /*
+     * TODO: allow also special pieces for end, takeback and resign
+     * or maybe only special piece for takeback and resign (offical)
+     * and exception for end?
+     */
     Step(Direction direction, int column, int row, char piece);
 
     ~Step() = default;

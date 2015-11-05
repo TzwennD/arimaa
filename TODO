@@ -1,4 +1,4 @@
-* finish setStartingPosition sanity check
-* apply moves in startPosition
-* implement parsing for steps
-* implement Game::playOneRound and co
+* allow pulling in movePiece (maybe give also last step as argument)
+* add functionality for end, resign and takeback as special steps (at the moment, not less than 4 steps are possible)
+* add special step when capturing pieces (ex.: Rc3x), should be easy in removeTrappedPieces()
+* implement updatePossibleMoves (pushing, pulling is missing, needs fixing maybe)

@@ -19,6 +19,7 @@ Board::Board ( ): squares_(8), deadPieces_(2), pushSquare(nullptr) {
     }
 }
 
+/* TODO: allow pulling */
 void
 Board::movePiece (Step step, bool gold, int stepNr)
 {
@@ -89,6 +90,7 @@ Board::isStrongerPieceNear(int row, int column, bool gold) const
     return false;
 }
 
+/* TODO: add new step for every captured piece */
 void
 Board::removeTrappedPieces()
 {
@@ -178,6 +180,7 @@ Board::isPieceFrozen (int row, int column) const
 }
 
 
+/* TODO: pushing and pulling not implemented */
 void
 Board::updatePossibleMoves (bool isPlayerGold )
 {
