@@ -3,6 +3,7 @@
 
 #include <stdexcept>
 #include <iostream>
+#include <vector>
 
 #include "enums.hpp"
 
@@ -39,6 +40,8 @@ public:
     bool operator<(const Direction &other) const {
         return getDirection() < other.getDirection();
     }
+
+    static std::vector<Direction> getAllDirections();
 };
 
 std::ostream &operator<<(std::ostream &os, const Direction &direction);

@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "Direction.hpp"
 
 using namespace std;
@@ -49,4 +51,10 @@ ostream &operator<<(ostream &os, const Direction &direction)
         throw invalid_argument("Wrong direction!");
     }
     return os;
+}
+
+vector<Direction>
+Direction::getAllDirections()
+{
+    return vector<Direction>{Direction(NORTH), Direction(EAST), Direction(SOUTH), Direction(WEST)};
 }

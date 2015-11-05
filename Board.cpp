@@ -55,33 +55,17 @@ Board::movePiece (Step step, bool gold, int stepNr)
             throw invalid_argument("Cannot push as last step.");
 
         bool ownStrongerPiece = false;
-        vector<Direction> allDirections;
-        allDirections.push_back(Direction(NORTH));
-        allDirections.push_back(Direction(EAST));
-        allDirections.push_back(Direction(SOUTH));
-        allDirections.push_back(Direction(WEST));
-        for(Direction &d : allDirections) {
+        for(Direction &d : Direction::getAllDirections()) {
             int new_row = row + d.getRow();
             int new_column = column + d.getColumn();
             Piece neighbourPiece = squares_[new_row][new_column].getPiece();
-            if (neighbourPiece.isEmpty()) {
-                printf("Square empty.\n");
-                continue;
+            if (!neighbourPiece.isEmpty()
+                && neighbourPiece.isGold() == gold
+                && neighbourPiece.isStronger(squares_[row][column].getPiece())
+                && !isPieceFrozen(new_row, new_column)) {
+                ownStrongerPiece = true;
+                break;
             }
-            if (neighbourPiece.isGold() != gold) {
-                printf("Same piece color.\n");
-                continue;
-            }
-            if (!neighbourPiece.isStronger(squares_[row][column].getPiece())) {
-                printf("Piece not stronger.\n");
-                continue;
-            }
-            if (isPieceFrozen(new_row, new_column)) {
-                printf("Piece is frozen.\n");
-                continue;
-            }
-            ownStrongerPiece = true;
-            break;
         }
         if (!ownStrongerPiece)
             throw invalid_argument("Pushing without stronger piece, that can do that.");
@@ -113,12 +97,7 @@ Board::removeTrappedPieces()
                 continue;
             /* there is a piece -> is it being hold by a friend? */
             bool hold = false;
-            vector<Direction> allDirections;
-            allDirections.push_back(Direction(NORTH));
-            allDirections.push_back(Direction(EAST));
-            allDirections.push_back(Direction(SOUTH));
-            allDirections.push_back(Direction(WEST));
-            for(Direction &d : allDirections) {
+            for(Direction &d : Direction::getAllDirections()) {
                 int new_row = row + d.getRow();
                 int new_column = column + d.getColumn();
                 Piece neighbourPiece = squares_[new_row][new_column].getPiece();
@@ -178,12 +157,6 @@ Board::isPieceFrozen (int row, int column) const
      * check for stronger ennemy pieces -> need friend
      * check for friendly pieces -> isNotFrozen
      */
-    vector<Direction> allDirections;
-    allDirections.push_back(Direction(NORTH));
-    allDirections.push_back(Direction(EAST));
-    allDirections.push_back(Direction(SOUTH));
-    allDirections.push_back(Direction(WEST));
-
     bool ownColor = squares_[row][column].getPiece().isGold();
 
     /*
@@ -193,7 +166,7 @@ Board::isPieceFrozen (int row, int column) const
      */
     bool ret = false;
 
-    for(Direction &d : allDirections) {
+    for(Direction &d : Direction::getAllDirections()) {
         int new_row = row + d.getRow();
         int new_column = column + d.getColumn();
 
@@ -253,14 +226,7 @@ Board::getFreeDirections (int row, int column) const
     /* return set */
     set<Direction> ret;
 
-    /* all possible directions */
-    vector<Direction> allDirections;
-    allDirections.push_back(Direction(NORTH));
-    allDirections.push_back(Direction(EAST));
-    allDirections.push_back(Direction(SOUTH));
-    allDirections.push_back(Direction(WEST));
-
-    for(Direction &d : allDirections) {
+    for(Direction &d : Direction::getAllDirections()) {
         int new_row = row + d.getRow();
         int new_column = column + d.getColumn();
 
