@@ -79,8 +79,8 @@ Board::isStrongerPieceNear(int row, int column, bool gold) const
     for(Direction &d : Direction::getAllDirections()) {
         int neighbor_row = row + d.getRow();
         int neighbor_column = column + d.getColumn();
-        if (neighbour_row < 0 || neighbour_row >= 8 ||
-            neighbour_column < 0 || neighbour_column >= 8 )
+        if (neighbor_row < 0 || neighbor_row >= 8 ||
+            neighbor_column < 0 || neighbor_column >= 8 )
             continue;
         Piece neighbourPiece = squares_[neighbor_row][neighbor_column].getPiece();
         if (!neighbourPiece.isEmpty()
