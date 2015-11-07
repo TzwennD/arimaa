@@ -8,7 +8,7 @@
 using namespace std;
 
 Step::Step (Direction direction, int column, int row, char piece):
-    direction_(direction), column_(column), row_(row), piece_(piece)
+    direction_(direction), column_(column), row_(row), piece_(piece), type_(BASIC)
 {
     /* Check starting square */
     if (row < 0 || row >= 8 || column < 0 || column >= 8)
@@ -28,6 +28,9 @@ Step::Step (Direction direction, int column, int row, char piece):
     if (new_row < 0 || new_row >= 8 || new_column < 0 || new_column >= 8)
         throw  invalid_argument("Invalid step: Going out of the board!");
 }
+
+Step::Step(step_type type):
+    direction_(Direction()), column_(0), row_(0), piece_(0), type_(type) {}
 
 ostream &operator<<(ostream &os, const Step &step)
 {

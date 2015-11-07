@@ -59,9 +59,16 @@ static Step parseStep(string& s)
 {
     if (s == "")
         throw invalid_argument("String was empty -> last Step already given?");
+    if (s == "end")
+        return Step(END);
+    if (s == "takeback")
+        return Step(TAKEBACK);
+    if (s == "undo")
+        return Step(UNDO);
+    if (s == "resign")
+        return Step(RESIGN);
     if (s.length() != 4)
         throw invalid_argument("Not the right size!");
-    /* is s == end : throw exception that can be handled by the game to end move*/
 
     /* sanity checks missing */
     char figure = s[0];

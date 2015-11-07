@@ -76,10 +76,34 @@ void Game::playOneRound()
 
             /* Step validates itself */
             Step s = players_[i]->getStep(gold);
-            //add logic for end,takeback,resign and undo here
-            ++steps;
-            moves_.back().addStep(s);
-            board_.movePiece(s, gold, steps);
+            switch (s.getType()) {
+            case BASIC:
+                ++steps;
+                moves_.back().addStep(s);
+                board_.movePiece(s, gold, steps);
+                break;
+            case END:
+                finished = true;
+                break;
+            case RESIGN:
+                finished = true;
+                finished_ = true;
+                break;
+            case TAKEBACK:
+                //TODO: implement
+                throw invalid_argument("not yet implemented");
+                break;
+            case UNDO:
+                throw invalid_argument("not yet implemented");
+                if (steps > 0) {
+                    moves_.back().removeLastStep();
+                    steps--;
+                    //TODO:tell board about the undo
+                }
+                break;
+            default:
+                throw invalid_argument("should not happen");
+            }
         }
     }
 }
@@ -123,6 +147,7 @@ void Game::start()
         ++rounds_;
         playOneRound();
     }
+    //TODO:implement the END OF THE GAME
 }
 
 bool Game::isFinished()

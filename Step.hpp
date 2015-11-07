@@ -23,6 +23,8 @@ public:
      */
     Step(Direction direction, int column, int row, char piece);
 
+    Step(step_type type);
+
     ~Step() = default;
 
     bool isInitialisationStep() const {
@@ -40,6 +42,7 @@ private:
     const int column_;
     const int row_;
     const char piece_;
+    const step_type type_;
 
 public:
     Direction getDirection() const {
@@ -59,6 +62,9 @@ public:
     }
     int getDestColumn() const {
         return column_ + direction_.getColumn();
+    }
+    step_type getType() const {
+        return type_;
     }
 };
 

@@ -44,6 +44,10 @@ public:
     void addStep(Step s) {
         stepList_.push_back(s);
     }
+
+    void removeLastStep() {
+        stepList_.pop_back();
+    }
 };
 
 std::ostream &operator<<(std::ostream &os, const Move &move);

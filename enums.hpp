@@ -2,6 +2,14 @@
 #define ENUMS_H
 
 typedef enum {
+    BASIC,
+    END,
+    UNDO,
+    RESIGN,
+    TAKEBACK
+} step_type;
+
+typedef enum {
     NORTH='n',
     EAST='e',
     SOUTH='s',
