@@ -16,9 +16,10 @@ class Step
 {
 public:
     /*
-     * TODO: allow also special pieces for end, takeback and resign
-     * or maybe only special piece for takeback and resign (offical)
+     * TODO: allow also special step for end, takeback (last move) and resign
+     * or maybe only special step for takeback and resign (offical)
      * and exception for end?
+     * add undo to undo last step
      */
     Step(Direction direction, int column, int row, char piece);
 

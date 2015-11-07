@@ -71,15 +71,15 @@ void Game::playOneRound()
         bool gold = int2color(i);
         moves_.push_back(Move(rounds_, gold));
         while(!finished && steps < 4) {
-            /* sanity checks missing */
             board_.updatePossibleMoves(gold);
             players_[i]->notify(board_,moves_);
 
             /* Step validates itself */
             Step s = players_[i]->getStep(gold);
+            //add logic for end,takeback,resign and undo here
             ++steps;
-            board_.movePiece(s, gold, steps);
             moves_.back().addStep(s);
+            board_.movePiece(s, gold, steps);
         }
     }
 }
