@@ -14,7 +14,7 @@ typedef enum {
     EAST='e',
     SOUTH='s',
     WEST='w',
-    STAY,
+    STAY='y',
     TRAPPED='x'
 } direction_type;
 

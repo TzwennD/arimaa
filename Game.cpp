@@ -75,10 +75,14 @@ void Game::playOneRound()
             Step s = players_[i]->getStep(gold);
             switch (s.getType()) {
             case BASIC:
+            {
                 ++steps;
                 moves_.back().addStep(s);
-                board_.movePiece(s, gold, steps);
+                Step deadAnimal = board_.movePiece(s, gold, steps);
+                if (deadAnimal.getType() != END)
+                    moves_.back().addStep(deadAnimal);
                 break;
+            }
             case END:
                 finished = true;
                 break;

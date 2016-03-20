@@ -1,5 +1,4 @@
 * allow pulling in movePiece (maybe give also last step as argument)
 * add functionality for takeback and undo as special steps
-* add special step when capturing pieces (ex.: Rc3x), should be easy in removeTrappedPieces()
 * implement updatePossibleMoves (pushing, pulling is missing, needs fixing maybe)
 * implement game end

@@ -44,7 +44,7 @@ private:
 public:
 
 
-    void movePiece (Step step, bool gold, int stepNr);
+    Step movePiece (Step step, bool gold, int stepNr);
 
     void applyInitMove(Move& move);
 
@@ -63,7 +63,7 @@ private:
     std::set<Direction> getFreeDirections (int row, int column) const;
 
     /* movePiece helper*/
-    void removeTrappedPieces();
+    Step removeTrappedPieces();
     bool isStrongerPieceNear(int row, int column, bool gold) const;
 
     std::vector<Piece> getAllNeighboringPieces(int row, int column) const;

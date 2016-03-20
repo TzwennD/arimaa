@@ -20,6 +20,9 @@ Direction::Direction (direction_type direction): row_(0), column_(0), direction_
     case WEST:
         column_ = -1;
         break;
+    case TRAPPED:
+        /* trapped means (0,0) = default */
+        break;
     case STAY:
         /* stay means (0,0) = default */
         break;
@@ -43,6 +46,9 @@ ostream &operator<<(ostream &os, const Direction &direction)
         break;
     case WEST:
         os << "w";
+        break;
+    case TRAPPED:
+        os << "x";
         break;
     case STAY:
         /* dont't print anything */

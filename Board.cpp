@@ -20,7 +20,7 @@ Board::Board ( ): squares_(8), deadPieces_(2), pushSquare(nullptr) {
 }
 
 /* TODO: allow pulling */
-void
+Step
 Board::movePiece (Step step, bool gold, int stepNr)
 {
     int row = step.getRow();
@@ -62,7 +62,7 @@ Board::movePiece (Step step, bool gold, int stepNr)
     squares_[new_row][new_column].setPiece(step.getPiece());
     squares_[row][column].setPiece(Piece());
 
-    removeTrappedPieces();
+    Step deadAnimal = removeTrappedPieces();
 
     /* pushing completed? */
     if (pushSquare)
@@ -71,6 +71,8 @@ Board::movePiece (Step step, bool gold, int stepNr)
     /* currently pushing? */
     if (pushing)
         pushSquare = &squares_[row][column];
+
+    return deadAnimal;
 }
 
 bool
@@ -94,7 +96,7 @@ Board::isStrongerPieceNear(int row, int column, bool gold) const
 }
 
 /* TODO: add new step for every captured piece */
-void
+Step
 Board::removeTrappedPieces()
 {
     vector<int> traps = {2, 5};
@@ -114,9 +116,12 @@ Board::removeTrappedPieces()
             if (!hold) {
                 deadPieces_.push_back(thisPiece);
                 squares_[row][column].setPiece(Piece());
+                Step deadAnimal(TRAPPED,column, row, thisPiece.toChar());
+                return deadAnimal;
             }
         }
     }
+    return Step(END);
 }
 
 /* for initial setup */
