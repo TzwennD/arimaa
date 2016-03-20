@@ -153,6 +153,11 @@ getStartPosition(bool gold)
         cout << "Enter start position:" << endl;
         string input;
         cin >> input;
+        if(input == "resign") {
+            Step s(RESIGN);
+            m.addStep(s);
+            return m;
+        }
         if(input.length() != 3) {
             cout << "Wrong input length, try again! Format is: Ra1" << endl;
             continue;
