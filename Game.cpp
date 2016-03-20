@@ -136,6 +136,9 @@ void Game::playOneRound()
 
 void Game::setStartPosition(bool gold)
 {
+    if (finished_)
+        return;
+
     players_[color2int(gold)]->notify(board_,moves_);
     Move m = players_[color2int(gold)]->getStartPosition(gold);
 
@@ -147,7 +150,17 @@ void Game::setStartPosition(bool gold)
             *it = toupper(*it);
         }
     }
+
     list<Step> steps = m.getStepList();
+
+    for (Step s : steps) {
+        if (s.getType() == RESIGN) {
+            finished_ = true;
+            winningPlayer_ = !gold;
+            return;
+        }
+    }
+
     vector<char> setFigures;
     setFigures.reserve(16);
     for (list<Step>::iterator it = steps.begin(); it != steps.end(); ++it) {
