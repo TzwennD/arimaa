@@ -20,6 +20,10 @@ while(<FA>){
     chomp;
     if($count == $gamenum){
         my @G = split '\t';
+        my $termination = $G[22];
+        if($termination =~ /[g,m,e,r,p]/)
+        {}
+        else {print "resign\n"; die "Game terminated unexpectedly! Choose another game!\n";}
         my $realgame = $G[27]; # not sure if this is true!
         $realgame =~ s/\\n/ /g;
         my @F= split ' ', $realgame;
