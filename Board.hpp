@@ -44,7 +44,7 @@ private:
 public:
 
 
-    Step movePiece (Step step, bool gold, int stepNr);
+    Step movePiece (Step step, bool gold, int stepNr, Step lastStep);
 
     void applyInitMove(Move& move);
 

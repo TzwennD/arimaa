@@ -58,7 +58,21 @@ void Game::addPlayer(Player *newPlayer, bool gold)
     observerCollection_[color].push_back(newPlayer);
 }
 
-
+Step Game::getLastStep(int steps) const
+{
+    if (steps > 0) {
+        Step tmpStep = moves_.back().getStepList().back();
+        /* check if last step was a death */
+        if (tmpStep.getDirection().getDirection() == TRAPPED) {
+            auto i = moves_.back().getStepList().end();
+            i--; // last element
+            i--; // before last element
+            return *i;
+        } else
+            return tmpStep;
+    } // else
+    return Step(END);
+}
 
 void Game::playOneRound()
 {
@@ -67,7 +81,7 @@ void Game::playOneRound()
         int steps = 0;
         bool gold = int2color(i);
         moves_.push_back(Move(rounds_, gold));
-        while(!finished && steps < 4) {
+        while(!finished && !finished_ && steps < 4) {
             board_.updatePossibleMoves(gold);
             players_[i]->notify(board_,moves_);
 
@@ -77,8 +91,9 @@ void Game::playOneRound()
             case BASIC:
             {
                 ++steps;
+                Step lastStep = getLastStep(steps);
                 moves_.back().addStep(s);
-                Step deadAnimal = board_.movePiece(s, gold, steps);
+                Step deadAnimal = board_.movePiece(s, gold, steps, lastStep);
                 if (deadAnimal.getType() != END)
                     moves_.back().addStep(deadAnimal);
                 break;

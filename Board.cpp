@@ -19,9 +19,9 @@ Board::Board ( ): squares_(8), deadPieces_(2), pushSquare_(nullptr) {
     }
 }
 
-/* TODO: allow pulling */
+/* Attention: don't use lastStep in first step */
 Step
-Board::movePiece (Step step, bool gold, int stepNr)
+Board::movePiece (Step step, bool gold, int stepNr, Step lastStep)
 {
     int row = step.getRow();
     int column = step.getColumn();
@@ -30,32 +30,46 @@ Board::movePiece (Step step, bool gold, int stepNr)
     int new_row = step.getDestRow();
     int new_column = step.getDestColumn();
 
-    if (squares_[row][column].getPiece().isGold() == gold
+    const Piece& currentPiece = squares_[row][column].getPiece();
+
+    if (currentPiece.isGold() == gold
         && isPieceFrozen(row,column))
         throw  invalid_argument("Piece is frozen! Cannot move.");
 
     if (!squares_[new_row][new_column].getPiece().isEmpty())
         throw  invalid_argument("There is a piece in the way! Cannot move.");
 
-    if (squares_[row][column].getPiece().toChar() != step.getPiece())
+    if (currentPiece.toChar() != step.getPiece())
         throw invalid_argument("Piece not at this position. Cannot move.");
 
     if (pushSquare_) {
         if (pushSquare_->getRow() != new_row
             || pushSquare_->getColumn() != new_column)
             throw invalid_argument("You have to complete the push.");
-        if (squares_[row][column].getPiece().isGold() != gold)
+        if (currentPiece.isGold() != gold)
             throw invalid_argument("You try to push with an opponants piece.");
     }
 
-    /* when pushing, check if own stronger piece is near */
+    /*
+     * when pushing, check if own stronger piece is near
+     * or when we are pulling..
+     */
     bool pushing = false;
-    if (squares_[row][column].getPiece().isGold() != gold) {
-        pushing = true;
-        if (stepNr == 4)
-            throw invalid_argument("Cannot push as last step.");
-        if (!isStrongerPieceNear(row, column, gold))
-            throw invalid_argument("Pushing without stronger piece, that can do that.");
+    if (currentPiece.isGold() != gold) {
+        /* if pulling possible */
+        if (stepNr > 0
+            && lastStep.getRow() == new_row && lastStep.getColumn() == new_column
+            && (isupper(lastStep.getPiece()) != 0) == gold /* same color */
+            && Piece(lastStep.getPiece()).isStronger(currentPiece) )
+            ; // do nothing, allow pulling
+        /* else: no pulling possible */
+        else {
+            pushing = true;
+            if (stepNr == 4)
+                throw invalid_argument("Cannot push as last step.");
+            if (!isStrongerPieceNear(row, column, gold))
+                throw invalid_argument("Pushing without stronger piece, which can do that.");
+        }
     }
 
     /* do actual movement */

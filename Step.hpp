@@ -31,7 +31,7 @@ public:
         return direction_.getDirection() == STAY;
     }
 
-    Step& operator=(const Step&) = delete;
+    Step& operator=(const Step&) = default;
 
 private:
     const Direction direction_;

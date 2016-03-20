@@ -15,7 +15,7 @@ public:
     Direction (direction_type direction);
 
     virtual ~Direction ( ) {}
-    Direction& operator=(const Direction&) = delete;
+    Direction& operator=(const Direction&) = default;
 
 
 private:

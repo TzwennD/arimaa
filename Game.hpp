@@ -117,6 +117,8 @@ private:
 
 
     void notifyObserver ( ) const;
+
+    Step getLastStep(int steps) const;
 };
 
 std::ostream &operator<<(std::ostream &os, const Game &game);
