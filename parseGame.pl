@@ -27,7 +27,7 @@ while(<FA>){
         my $realgame = $G[27]; # not sure if this is true!
         $realgame =~ s/\\n/ /g;
         my @F= split ' ', $realgame;
-        my $steps=0;
+        my $steps=5;
         for(my $i=0;$i< scalar @F;$i++){
             my $current = $F[$i];
             if($current =~ /^\d+[w,s,b,g]$/ )
