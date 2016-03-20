@@ -278,6 +278,59 @@ Board::getAllNeighboringPieces(int row, int column) const
     return move(ret);
 }
 
+/* Input: Color to check for */
+bool
+Board::rabbitEndPos(bool gold)
+{
+    int aimRow;
+    if (gold) {
+        aimRow = 7;
+    } else {
+        aimRow = 0;
+    }
+
+    for (Square s : squares_[aimRow]) {
+        if (!s.getPiece().isEmpty()
+            && s.getPiece().isGold() == gold
+            && s.getPiece().getType() == RABBIT) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/*
+ * The order of checking for win/lose conditions is as follows assuming
+ *       player A just made the move and player B now needs to move:
+
+ * Check if a rabbit of player A reached goal. If so player A wins.
+ * Check if a rabbit of player B reached goal. If so player B wins.
+ * Check if player B lost all rabbits. If so player A wins.
+ * Check if player A lost all rabbits. If so player B wins.
+ * Check if player B has no possible move (all pieces are frozen
+ *       or have no place to move). If so player A wins.
+ * Check if the only moves player B has are 3rd time repetitions.
+ *       If so player A wins.
+ * Taken from http://arimaa.com/arimaa/learn/rulesIntro.html
+ */
+
+/*
+ * Input: player that just finished his move
+ * Output: return value: is game finished?
+ *         gold: which player wins?
+ */
+bool
+Board::endPosition(bool& gold)
+{
+    if (rabbitEndPos(gold)) {
+        return true;
+    } else if (rabbitEndPos(!gold)) {
+        gold = !gold;
+        return true;
+    } // TODO
+    return false;
+}
 
 ostream &operator<<(std::ostream &os, const Board &board)
 {

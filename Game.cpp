@@ -77,6 +77,8 @@ Step Game::getLastStep(int steps) const
 void Game::playOneRound()
 {
     for (int i = 0; i < 2; i++) {
+        if (finished_)
+            break;
         bool finished = false;
         int steps = 0;
         bool gold = int2color(i);
@@ -124,6 +126,11 @@ void Game::playOneRound()
         }
         for (auto &o : observerCollectionAll_)
             o->notify(board_, moves_);
+        bool color = gold;
+        if (board_.endPosition(color)) {
+            finished_ = true;
+            winningPlayer_ = color;
+        }
     }
 }
 

@@ -54,6 +54,9 @@ public:
         return squares_;
     }
 
+    bool endPosition(bool& gold);
+    bool rabbitEndPos(bool gold);
+
 private:
     /* for initial setup */
     void setPiece (Step step);
