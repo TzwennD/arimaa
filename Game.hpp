@@ -70,6 +70,7 @@ private:
 
     int rounds_;
     bool finished_;
+    bool winningPlayer_;
 
 public:
 

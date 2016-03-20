@@ -11,7 +11,7 @@
 using namespace std;
 
 Game::Game () :
-    goldToPlay_(FIRSTCOLOR), rounds_(FIRSTMOVE), finished_(false)//, currentMove_(FIRSTMOVE,FIRSTCOLOR)
+    goldToPlay_(FIRSTCOLOR), rounds_(FIRSTMOVE), finished_(false)
 {
     players_[COLORGOLD] = nullptr;
     players_[COLORSILVER] = nullptr;
@@ -104,6 +104,7 @@ void Game::playOneRound()
             case RESIGN:
                 finished = true;
                 finished_ = true;
+                winningPlayer_ = !gold;
                 break;
             case TAKEBACK:
                 //TODO: implement
@@ -165,7 +166,8 @@ void Game::start()
         ++rounds_;
         playOneRound();
     }
-    //TODO:implement the END OF THE GAME
+    for (auto &o : observerCollectionAll_)
+        o->notifyGameEnd(board_, moves_, winningPlayer_);
 }
 
 bool Game::isFinished()

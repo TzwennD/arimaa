@@ -66,8 +66,8 @@ public:
     step_type getType() const {
         return type_;
     }
-};
 
-std::ostream &operator<<(std::ostream &os, const Step &step);
+    friend std::ostream &operator<<(std::ostream &os, const Step &step);
+};
 
 #endif // STEP_H

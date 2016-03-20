@@ -35,10 +35,29 @@ Step::Step(step_type type):
 ostream &operator<<(ostream &os, const Step &step)
 {
     vector<char> alphabet = {'a','b','c','d','e','f','g','h'};
-    os << step.getPiece()
-       << alphabet[step.getColumn()]
-       << step.getRow() + 1
-       << step.getDirection();
+    switch (step.type_) {
+    case BASIC:
+        os << step.getPiece()
+           << alphabet[step.getColumn()]
+           << step.getRow() + 1
+           << step.getDirection();
+        break;
+    case TAKEBACK:
+        os << "TACKBACK";
+        break;
+    case END:
+        os << "END";
+        break;
+    case UNDO:
+        os << "UNDO";
+        break;
+    case RESIGN:
+        os << "RESIGN";
+        break;
+    default:
+        os << "strange typ, don't know...";
+        break;
+    }
     return os;
 }
 

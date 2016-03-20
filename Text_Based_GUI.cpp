@@ -97,6 +97,7 @@ getStep(bool gold)
     string st;
     cin >> st;
     Step s = parseStep(st);
+    cout << "Your step is: " << s << endl;
     return s;
 }
 
@@ -162,4 +163,18 @@ notify (Board copy_board, list<Move> changes )
         cout << last << endl;
     }
     cout << copy_board << endl;
+}
+
+void
+Text_Based_GUI::
+notifyGameEnd(Board copy_board, std::list<Move> changes, bool winningPlayer)
+{
+    notify(copy_board, changes);
+    cout << "Game over!" << endl;
+    cout << "Player ";
+    if (winningPlayer)
+        cout << "gold";
+    else
+        cout << "silver";
+    cout << " won!" << endl;
 }
