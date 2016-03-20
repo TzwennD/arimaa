@@ -62,9 +62,6 @@ void Game::addPlayer(Player *newPlayer, bool gold)
 
 void Game::playOneRound()
 {
-    for_each(observerCollectionAll_.begin(), observerCollectionAll_.end(),
-             [&] (Observer* ob) {ob->notify(board_, moves_); });
-
     for (int i = 0; i < 2; i++) {
         bool finished = false;
         int steps = 0;
@@ -105,6 +102,8 @@ void Game::playOneRound()
                 throw invalid_argument("should not happen");
             }
         }
+        for (auto &o : observerCollectionAll_)
+            o->notify(board_, moves_);
     }
 }
 
