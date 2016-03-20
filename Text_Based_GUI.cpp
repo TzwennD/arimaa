@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iterator>
 #include <string>
+#include <unistd.h>
 
 #include "Text_Based_GUI.hpp"
 
@@ -109,6 +110,7 @@ getStep(bool gold)
         } catch (invalid_argument& inv) {
             cout << "Retry because of " << inv.what() << endl;
             success = false;
+            sleep(1);
             continue;
         }
     }
@@ -160,6 +162,7 @@ getStartPosition(bool gold)
         }
         if(input.length() != 3) {
             cout << "Wrong input length, try again! Format is: Ra1" << endl;
+            sleep(1);
             continue;
         }
         char figure = input[0];
@@ -169,10 +172,9 @@ getStartPosition(bool gold)
             p = parseSquare(pos);
         } catch (invalid_argument& inv) {
             cout << "Retry because of " << inv.what() << endl;
+            sleep(1);
             continue;
         }
-
-        cout << "pos:" << p.first << "," << p.second << endl;
 
         if(gold) {
             if(p.second > 1) {
@@ -201,30 +203,8 @@ getStartPosition(bool gold)
         }
         Step s(STAY, p.first, p.second, figure);
         m.addStep(s);
+        cout << "Your step is: " << s << endl;
     }
-    /*   for (unsigned i = 0; i < figures.size(); i++) {
-        char this_fig = figures[i];
-        if (gold)
-            this_fig = toupper(this_fig);
-        bool success = false;
-        pair<int,int> p;
-        while (!success) {
-            success = true;
-            cout << "Where to put piece " << this_fig << ": ";
-            string input;
-            cin >> input;
-            try {
-                p = parseSquare(input);
-            } catch (invalid_argument& inv) {
-                cout << "Retry because of " << inv.what() << endl;
-                success = false;
-                continue;
-            }
-            Step s(STAY, p.first, p.second, this_fig);
-            m.addStep(s);
-        }
-    }
-*/
     return m;
 }
 
