@@ -11,7 +11,7 @@
 using namespace std;
 
 /* Row indices are moved by one */
-Board::Board ( ): squares_(8), deadPieces_(2), pushSquare(nullptr) {
+Board::Board ( ): squares_(8), deadPieces_(2), pushSquare_(nullptr) {
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
             squares_[i].push_back(Square(i,j));
@@ -40,9 +40,9 @@ Board::movePiece (Step step, bool gold, int stepNr)
     if (squares_[row][column].getPiece().toChar() != step.getPiece())
         throw invalid_argument("Piece not at this position. Cannot move.");
 
-    if (pushSquare) {
-        if (pushSquare->getRow() != new_row
-            || pushSquare->getColumn() != new_column)
+    if (pushSquare_) {
+        if (pushSquare_->getRow() != new_row
+            || pushSquare_->getColumn() != new_column)
             throw invalid_argument("You have to complete the push.");
         if (squares_[row][column].getPiece().isGold() != gold)
             throw invalid_argument("You try to push with an opponants piece.");
@@ -65,12 +65,12 @@ Board::movePiece (Step step, bool gold, int stepNr)
     Step deadAnimal = removeTrappedPieces();
 
     /* pushing completed? */
-    if (pushSquare)
-        pushSquare = nullptr;
+    if (pushSquare_)
+        pushSquare_ = nullptr;
 
     /* currently pushing? */
     if (pushing)
-        pushSquare = &squares_[row][column];
+        pushSquare_ = &squares_[row][column];
 
     return deadAnimal;
 }
@@ -192,7 +192,7 @@ Board::isPieceFrozen (int row, int column) const
 void
 Board::updatePossibleMoves (bool isPlayerGold )
 {
-    if (pushSquare) {
+    if (pushSquare_) {
         /* only own pieces can move only to this square */
         // TODO
         return;

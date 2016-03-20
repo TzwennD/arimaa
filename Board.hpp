@@ -39,7 +39,7 @@ private:
      * Store square if next step must complete push at this position
      * Otherwise null
      */
-    Square *pushSquare;
+    Square *pushSquare_;
 
 public:
 
