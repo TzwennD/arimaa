@@ -88,17 +88,31 @@ Step
 Text_Based_GUI::
 getStep(bool gold)
 {
-    cout << "Player ";
-    if (gold)
-        cout << "gold";
-    else
-        cout << "silver";
-    cout << ": What is your next step?" << endl;
-    string st;
-    cin >> st;
-    Step s = parseStep(st);
-    cout << "Your step is: " << s << endl;
-    return s;
+    bool success = false;
+    while(!success) {
+        success = true;
+
+        cout << "Player ";
+        if (gold)
+            cout << "gold";
+        else
+            cout << "silver";
+
+        cout << ": What is your next step?" << endl;
+        string st;
+        cin >> st;
+
+        try {
+            Step s = parseStep(st);
+            cout << "Your step is: " << s << endl;
+            return s;
+        } catch (invalid_argument& inv) {
+            cout << "Retry because of " << inv.what() << endl;
+            success = false;
+            continue;
+        }
+    }
+    throw invalid_argument("not reached!");
 }
 
 /*
@@ -108,8 +122,13 @@ Move
 Text_Based_GUI::
 getStartPosition(bool gold)
 {
-    vector<char> figures = {'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r',
+    list<char> figures = {'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r',
                             'c', 'c', 'd', 'd', 'h', 'h', 'm', 'e'};
+    if(gold) {
+        for(auto i = figures.begin(); i != figures.end(); i++) {
+            *i = toupper(*i);
+        }
+    }
 
     cout << "Player ";
     if (gold)
@@ -124,7 +143,61 @@ getStartPosition(bool gold)
 
 
     Move m(1, gold);
-    for (unsigned i = 0; i < figures.size(); i++) {
+
+    while(!figures.empty()) {
+        cout << "Following pieces need a start position:" << endl;
+        for (auto f : figures)
+            cout << f << " ";
+        cout << endl;
+
+        cout << "Enter start position:" << endl;
+        string input;
+        cin >> input;
+        if(input.length() != 3) {
+            cout << "Wrong input length, try again! Format is: Ra1" << endl;
+            continue;
+        }
+        char figure = input[0];
+        string pos =  input.substr(1,2);
+        pair<int,int> p;
+        try {
+            p = parseSquare(pos);
+        } catch (invalid_argument& inv) {
+            cout << "Retry because of " << inv.what() << endl;
+            continue;
+        }
+
+        cout << "pos:" << p.first << "," << p.second << endl;
+
+        if(gold) {
+            if(p.second > 1) {
+                cout << "Wrong position, just rows 1 and 2! Try again!" << endl;
+                continue;
+            }
+        }
+        else {
+            if(p.second < 6) {
+                cout << "Wrong position, just rows 7 and 8! Try again!" << endl;
+                continue;
+            }
+        }
+        bool found = false;
+        //manually remove figures
+        for (auto j = figures.begin(); j != figures.end(); j++) {
+            if(*j == figure) {
+                figures.erase(j);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            cout << "Figure already put or wrong input! Try again!" << endl;
+            continue;
+        }
+        Step s(STAY, p.first, p.second, figure);
+        m.addStep(s);
+    }
+    /*   for (unsigned i = 0; i < figures.size(); i++) {
         char this_fig = figures[i];
         if (gold)
             this_fig = toupper(this_fig);
@@ -146,6 +219,7 @@ getStartPosition(bool gold)
             m.addStep(s);
         }
     }
+*/
     return m;
 }
 

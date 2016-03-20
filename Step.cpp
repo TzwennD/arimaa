@@ -43,7 +43,7 @@ ostream &operator<<(ostream &os, const Step &step)
            << step.getDirection();
         break;
     case TAKEBACK:
-        os << "TACKBACK";
+        os << "TAKEBACK";
         break;
     case END:
         os << "END";
@@ -55,7 +55,7 @@ ostream &operator<<(ostream &os, const Step &step)
         os << "RESIGN";
         break;
     default:
-        os << "strange typ, don't know...";
+        os << "strange type, don't know...";
         break;
     }
     return os;
