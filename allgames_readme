@@ -1,0 +1,23 @@
+Termination can be
+
+    g = Rabbit reached the goal
+
+    m = Player had no move; immobilization
+
+    e = No rabbits left; elimination
+
+    t = Player ran out of time
+
+    r = Player resigned
+
+    i = Bot submtted an illegal move (after 2009.02.20)
+
+    f = Player lost by forfeit; did not show up for scheduled game
+
+    a = Abandoned; both players left
+
+    s = Score used to determine result after game time exausted
+
+    p = Position repeated 3 times (before 2008.07.01)
+
+    n = No rabbits left for either player; draw (before 2008.07.01)
