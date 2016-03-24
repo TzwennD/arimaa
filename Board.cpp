@@ -42,6 +42,16 @@ Board::movePiece (Step step, bool gold, int stepNr, Step lastStep)
     if (currentPiece.toChar() != step.getPiece())
         throw invalid_argument("Piece not at this position. Cannot move.");
 
+    if (currentPiece.getType() == RABBIT) {
+        if (gold) {
+            if (direction.getDirection() == SOUTH)
+                throw invalid_argument("Rabbits cannot go back.");
+        } else {
+            if (direction.getDirection() == NORTH)
+                throw invalid_argument("Rabbits cannot go back.");
+        }
+    }
+
     if (pushSquare_) {
         if (pushSquare_->getRow() != new_row
             || pushSquare_->getColumn() != new_column)
