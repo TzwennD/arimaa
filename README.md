@@ -8,7 +8,9 @@ Usage:
 
 For testing:
 * ./arimaa < testing_input
+* ./read.sh testing_start | ./arimaa
 * ./parseGame.pl allgames2002.txt [number] | ./arimaa
+
 
 Miscellaneous:
 * test file allgames2002.txt taken from http://arimaa.com/arimaa/download/gameData/
