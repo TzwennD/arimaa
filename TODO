@@ -2,3 +2,4 @@
 * implement updatePossibleMoves (pushing, pulling is missing, needs fixing maybe)
 * implement game end (see Board::endPosition)
 * test with available games from arimaa.com
+* catch errors without breaking the game
