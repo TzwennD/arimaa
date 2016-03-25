@@ -38,7 +38,7 @@ public:
     void notify(Board copy_board, std::list<Move> changes);
     void notifyGameEnd(Board copy_board, std::list<Move> changes,
                        bool winningPlayer);
-
+    void notifyError(std::string error);
 private:
     Game game;
 

@@ -34,7 +34,7 @@ public:
     virtual void notify(Board copy_board, std::list<Move> changes) = 0;
     virtual void notifyGameEnd(Board copy_board, std::list<Move> changes,
                                bool winningPlayer) = 0;
-
+    virtual void notifyError(std::string error) = 0;
 };
 
 #endif // PLAYER_H

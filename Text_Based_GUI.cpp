@@ -237,3 +237,10 @@ notifyGameEnd(Board copy_board, std::list<Move> changes, bool winningPlayer)
         cout << "silver";
     cout << " won!" << endl;
 }
+
+void
+Text_Based_GUI::
+notifyError(std::string error)
+{
+    cout << "\033[41m" << error << "\033[0m" << endl;
+}

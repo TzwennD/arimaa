@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <vector>
 #include <list>
+#include <sstream>
 
 #include "Game.hpp"
 
@@ -60,7 +61,7 @@ void Game::addPlayer(Player *newPlayer, bool gold)
 
 Step Game::getLastStep(int steps) const
 {
-    if (steps > 0) {
+    if (steps > 1) {
         Step tmpStep = moves_.back().getStepList().back();
         /* check if last step was a death */
         if (tmpStep.getDirection().getDirection() == TRAPPED) {
@@ -92,12 +93,20 @@ void Game::playOneRound()
             switch (s.getType()) {
             case BASIC:
             {
+                Step lastStep = getLastStep(steps + 1);
+                try {
+                    Step deadAnimal = board_.movePiece(s, gold, steps + 1,
+                                                       lastStep);
+                    moves_.back().addStep(s);
+                    if (deadAnimal.getType() != END)
+                        moves_.back().addStep(deadAnimal);
+                } catch (invalid_argument& inv) {
+                    stringstream ss;
+                    ss << "Error occured: " << inv.what();
+                    players_[i]->notifyError(ss.str());
+                    continue;
+                }
                 ++steps;
-                Step lastStep = getLastStep(steps);
-                moves_.back().addStep(s);
-                Step deadAnimal = board_.movePiece(s, gold, steps, lastStep);
-                if (deadAnimal.getType() != END)
-                    moves_.back().addStep(deadAnimal);
                 break;
             }
             case END:

@@ -24,7 +24,8 @@ typedef enum  {
     DOG = 'd',
     HORSE = 'h',
     CAMEL = 'm',
-    ELEPHANT = 'e'
+    ELEPHANT = 'e',
+    EMPTY = 'n'
 } piece_type;
 
 typedef enum {

@@ -15,7 +15,7 @@
 class Piece
 {
 public:
-    Piece (): type_(piece_type('e')), gold_(true), empty_(true) {}
+    Piece (): type_(piece_type('n')), gold_(true), empty_(true) {}
     Piece (piece_type type_, bool isGold_);
     Piece (char ch);
 

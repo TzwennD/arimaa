@@ -19,7 +19,10 @@ Board::Board ( ): squares_(8), deadPieces_(2), pushSquare_(nullptr) {
     }
 }
 
-/* Attention: don't use lastStep in first step */
+/*
+ * Attention: don't use lastStep in first step.
+ * stepNr between 1 and 4.
+ */
 Step
 Board::movePiece (Step step, bool gold, int stepNr, Step lastStep)
 {
@@ -67,7 +70,7 @@ Board::movePiece (Step step, bool gold, int stepNr, Step lastStep)
     bool pushing = false;
     if (currentPiece.isGold() != gold) {
         /* if pulling possible */
-        if (stepNr > 0
+        if (stepNr > 1
             && lastStep.getRow() == new_row && lastStep.getColumn() == new_column
             && (isupper(lastStep.getPiece()) != 0) == gold /* same color */
             && Piece(lastStep.getPiece()).isStronger(currentPiece) )
