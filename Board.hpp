@@ -47,6 +47,7 @@ public:
     Step movePiece (Step step, bool gold, int stepNr, Step lastStep);
 
     void applyInitMove(Move& move);
+    void emptyStartPosition(bool gold);
 
     void updatePossibleMoves (bool isPlayerGold );
 

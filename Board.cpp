@@ -186,6 +186,23 @@ Board::applyInitMove(Move& move)
     for_each(stepList.begin(), stepList.end(), [&] (Step s) { setPiece(s); });
 }
 
+void
+Board::emptyStartPosition(bool gold)
+{
+    int row;
+    if (gold) {
+        row = 0;
+    } else {
+        row = 6;
+    }
+    Piece p;
+    for(int i = row; i < row + 2; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            squares_[i][j].setPiece(p);
+        }
+    }
+}
+
 bool
 Board::isPieceFrozen (int row, int column) const
 {

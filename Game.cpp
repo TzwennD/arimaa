@@ -189,8 +189,17 @@ void Game::setStartPosition(bool gold)
 void Game::start()
 {
     /* do twice: for gold=true and gold=false */
-    setStartPosition(true);
-    setStartPosition(false);
+    for(int i = 1; i >= 0; --i) {
+            try {
+                setStartPosition(i);
+            } catch (invalid_argument inv) {
+                stringstream ss;
+                ss << "Error occured: " << inv.what();
+                players_[color2int(i)]->notifyError(ss.str());
+                board_.emptyStartPosition(i);
+                ++i;
+            }
+    }
     while (!isFinished()) {
         ++rounds_;
         playOneRound();
