@@ -22,6 +22,7 @@ std::ostream &operator<<(std::ostream &os, const Piece &piece)
         c = piece.getType();
         if (piece.isGold()) {
             c = std::toupper(c);
+        } else {
             os << "\033[1m";
         }
     }
